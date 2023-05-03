@@ -1,3 +1,4 @@
+import { object, string, number, date, InferType } from "yup";
 import Image from "next/image";
 import budget from "./../assets/images/MoneyBag.svg";
 import arrowUp from "./../assets/images/SortDown.svg";
@@ -9,8 +10,16 @@ import tester from "./../assets/images/TestResults.svg";
 import grafic from "./../assets/images/Illustrator.svg";
 import nextPage from "./../assets/images/button-arrow.svg";
 import ahp from "@/pages/ahp";
+
 export const Formahp = ({ ahpVariables, setAhpVariables }) => {
-  console.log(ahpVariables);
+  let userShema = object({
+    budget: number().required().positive().integer(),
+    hours: number().required().positive().integer().moreThan(4),
+    frontend: number().required().positive().integer(),
+    backend: number().required().positive().integer(),
+    tester: number().required().positive().integer(),
+  });
+
   const parseString = (e, updatedVariables) => {
     const numberRegex = /^\d+$/;
     if (numberRegex.test(e.target.value))
@@ -253,7 +262,7 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
             className="relative float-left  h-[3.125rem] w-[3.125rem] appearance-none  border-[0.125rem] border-solid border-black outline-none
             before:pointer-events-none before:absolute before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 
              before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] 
-            checked:after:absolute checked:after:-mt-12px checked:after:ml-[1.225rem] checked:after:block checked:after:h-[2.325rem] checked:after:w-[0.775rem] 
+            checked:after:absolute checked:after:-mt-12px checked:after:ml-[1.125rem] checked:after:block checked:after:h-[2.325rem] checked:after:w-[0.775rem] 
             checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-black 
             checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04]  focus:transition-[border-color_0.2s]"
             type="checkbox"
@@ -267,18 +276,22 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
           />
         </div>
       </div>
-      <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
-        <Image
-          src={nextPage}
-          alt="next page"
-          onClick={() =>
-            setAhpVariables({
-              ...ahpVariables,
-              currentPage: ahpVariables.currentPage + 1,
-            })
-          }
-        />
-      </div>
+      {userShema.isValidSync(ahpVariables) ? (
+        <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
+          <Image
+            src={nextPage}
+            alt="next page"
+            onClick={() =>
+              setAhpVariables({
+                ...ahpVariables,
+                currentPage: ahpVariables.currentPage + 1,
+              })
+            }
+          />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

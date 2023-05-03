@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Team from "./../assets/images/team.jpg";
+import Link from "next/link";
 export const Banner = () => {
   return (
     <div className="font-['LATO']">
@@ -30,10 +31,13 @@ export const Banner = () => {
               Learn more
             </button>
 
-            <button className="rounded-full  px-6 py-2 mt-4  text-white bg-black text-2xl btn-hover">
+            <Link
+              href="/ahp"
+              className="rounded-full  px-6 py-2 mt-4  text-white bg-black text-2xl btn-hover"
+            >
               {" "}
               AHP
-            </button>
+            </Link>
 
             <button className="rounded-full  px-6 py-2 mt-4  text-white bg-black text-2xl btn-hover">
               {" "}

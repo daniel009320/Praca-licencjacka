@@ -8,14 +8,50 @@ import backend from "./../assets/images/Server.svg";
 import tester from "./../assets/images/TestResults.svg";
 import grafic from "./../assets/images/Illustrator.svg";
 import nextPage from "./../assets/images/button-arrow.svg";
-import ahp from "@/pages/Ahp";
+import ahp from "@/pages/ahp";
 export const Formahp = ({ ahpVariables, setAhpVariables }) => {
-  console.log(typeof ahpVariables.budget);
-  const parseString = (e, updateVariable) => {
-    setAhpVariables({
-      ...ahpVariables,
-      updateVariable: e.target.value,
-    });
+  console.log(ahpVariables);
+  const parseString = (e, updatedVariables) => {
+    const numberRegex = /^\d+$/;
+    if (numberRegex.test(e.target.value))
+      switch (updatedVariables) {
+        case "budget":
+          setAhpVariables({
+            ...ahpVariables,
+            budget: Number(e.target.value),
+          });
+          break;
+        case "hours":
+          setAhpVariables({
+            ...ahpVariables,
+            hours: Number(e.target.value),
+          });
+          break;
+        case "frontend":
+          setAhpVariables({
+            ...ahpVariables,
+            frontend: Number(e.target.value),
+          });
+          break;
+        case "backend":
+          setAhpVariables({
+            ...ahpVariables,
+            backend: Number(e.target.value),
+          });
+          break;
+        case "tester":
+          setAhpVariables({
+            ...ahpVariables,
+            tester: Number(e.target.value),
+          });
+          break;
+        case "designer":
+          setAhpVariables({
+            ...ahpVariables,
+            designer: !ahpVariables.designer,
+          });
+          break;
+      }
   };
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
@@ -39,10 +75,9 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
-            type="number"
             value={ahpVariables.budget}
             onChange={(e) => {
-              parseString(e, budget);
+              parseString(e, "budget");
             }}
           />
           <Image
@@ -77,12 +112,9 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
             value={ahpVariables.hours}
-            onChange={(e) =>
-              setAhpVariables({
-                ...ahpVariables,
-                hours: Number(e.target.value),
-              })
-            }
+            onChange={(e) => {
+              parseString(e, "hours");
+            }}
           />
           <Image
             src={arrowDown}
@@ -104,12 +136,37 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
           <label className="text-xl font-semibold ">
             Ilość programistów frontend
           </label>
-          <Image src={arrowUp} alt="arrow up" className="cursor-pointer" />
+          <Image
+            src={arrowUp}
+            alt="arrow up"
+            className="cursor-pointer"
+            onClick={() =>
+              setAhpVariables({
+                ...ahpVariables,
+                frontend: ahpVariables.frontend + 1,
+              })
+            }
+          />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
-            value={0}
+            value={ahpVariables.frontend}
+            onChange={(e) => {
+              parseString(e, "frontend");
+            }}
           />
-          <Image src={arrowDown} alt="arrow down" className="cursor-pointer" />
+          <Image
+            src={arrowDown}
+            alt="arrow down"
+            className="cursor-pointer"
+            onClick={() => {
+              if (ahpVariables.frontend > 0) {
+                setAhpVariables({
+                  ...ahpVariables,
+                  frontend: ahpVariables.frontend - 1,
+                });
+              }
+            }}
+          />
         </div>
 
         <div className="w-[325px] border-2 border-black py-4 px-6 flex items-center flex-col gap-2">
@@ -117,23 +174,73 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
           <label className="text-xl font-semibold ">
             Ilość programistów backend
           </label>
-          <Image src={arrowUp} alt="arrow up" className="cursor-pointer" />
+          <Image
+            src={arrowUp}
+            alt="arrow up"
+            className="cursor-pointer"
+            onClick={() =>
+              setAhpVariables({
+                ...ahpVariables,
+                backend: ahpVariables.backend + 1,
+              })
+            }
+          />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
-            value={0}
+            value={ahpVariables.backend}
+            onChange={(e) => {
+              parseString(e, "backend");
+            }}
           />
-          <Image src={arrowDown} alt="arrow down" className="cursor-pointer" />
+          <Image
+            src={arrowDown}
+            alt="arrow down"
+            className="cursor-pointer"
+            onClick={() => {
+              if (ahpVariables.backend > 0) {
+                setAhpVariables({
+                  ...ahpVariables,
+                  backend: ahpVariables.backend - 1,
+                });
+              }
+            }}
+          />
         </div>
 
         <div className="w-[325px] border-2 border-black py-4 px-6 flex items-center flex-col gap-2">
           <Image src={tester} alt="money bag" />
           <label className="text-xl font-semibold ">Ilość testerów</label>
-          <Image src={arrowUp} alt="arrow up" className="cursor-pointer" />
+          <Image
+            src={arrowUp}
+            alt="arrow up"
+            className="cursor-pointer"
+            onClick={() =>
+              setAhpVariables({
+                ...ahpVariables,
+                tester: ahpVariables.tester + 1,
+              })
+            }
+          />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
-            value={0}
+            value={ahpVariables.tester}
+            onChange={(e) => {
+              parseString(e, "tester");
+            }}
           />
-          <Image src={arrowDown} alt="arrow down" className="cursor-pointer" />
+          <Image
+            src={arrowDown}
+            alt="arrow down"
+            className="cursor-pointer"
+            onClick={() => {
+              if (ahpVariables.tester > 0) {
+                setAhpVariables({
+                  ...ahpVariables,
+                  tester: ahpVariables.tester - 1,
+                });
+              }
+            }}
+          />
         </div>
 
         <div className="w-[325px] h-[268px] border-2 border-black py-4 px-6 flex items-center flex-col gap-2">
@@ -150,11 +257,27 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
             checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-black 
             checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04]  focus:transition-[border-color_0.2s]"
             type="checkbox"
+            checked={ahpVariables.designer}
+            onChange={(e) => {
+              setAhpVariables({
+                ...ahpVariables,
+                designer: !ahpVariables.designer,
+              });
+            }}
           />
         </div>
       </div>
       <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
-        <Image src={nextPage} alt="next page" />
+        <Image
+          src={nextPage}
+          alt="next page"
+          onClick={() =>
+            setAhpVariables({
+              ...ahpVariables,
+              currentPage: ahpVariables.currentPage + 1,
+            })
+          }
+        />
       </div>
     </div>
   );

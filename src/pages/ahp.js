@@ -1,8 +1,12 @@
 import { AhpHours } from "@/components/AhpHours";
-import { AhpMatrix } from "@/components/AhpMatrix";
+import { AhpDesignerMatrix } from "@/components/AhpDesignerMatrix";
 import { Formahp } from "@/components/Formahp";
 import { Header } from "@/components/Header";
 import { useState } from "react";
+import { AhpProjectManagerMatrix } from "@/components/AhpProjectManagerMatrix";
+import { AhpFrontendMatrix } from "@/components/AhpFrontednMatrix";
+import { AhpBackendMatrix } from "@/components/AhpBackendMatrix";
+import { AhpTesterMatrix } from "@/components/AhpTesterMatrix";
 
 const ahp = () => {
   const [ahpVariables, setAhpVariables] = useState({
@@ -18,6 +22,82 @@ const ahp = () => {
     frontHours: 1,
     backendHours: 1,
     testerHours: 1,
+    designerVariables: {
+      doswiadczenieSzybkoscPracy: 1,
+      doswiadczenieKomunikacja: 1,
+      doswiadczenieKreatywnosc: 1,
+      doswiadczenieResponsywnosc: 1,
+      szybkoscPracyKomunikacja: 1,
+      szybkoscPracyKreatywnosc: 1,
+      szybkoscPracyResponsywnosc: 1,
+      komunikacjaKreatywnosc: 1,
+      komunikacjaResponsywnosc: 1,
+      kreatywnoscResponsywnosc: 1,
+    },
+    pmVariables: {
+      doswiadczenieZarzadzanieZespolem: 1,
+      pmDoswiadczenieKomunikacja: 1,
+      doswiadczenieOrganizacjaPracy: 1,
+      doswiadczenieAdaptacja: 1,
+      ZarzadzanieZespolemKomunikacja: 1,
+      ZarzadzanieZespolemOrganizacjaPracy: 1,
+      ZarzadzanieZespolemAdaptacja: 1,
+      komunikacjaOrganizacjaPracy: 1,
+      komunikacjaAdaptacja: 1,
+      organizacjaPracyAdaptacja: 1,
+    },
+    frontendVariables: {
+      frontDoswiadczenieSzybkoscPracy: 1,
+      forntDoswiadczenieKomunikacja: 1,
+      doswiadczeniePracaZespolowa: 1,
+      forntDoswiadczenieAdaptacja: 1,
+      doswiadczenieTestowanie: 1,
+      doswiadczenieStylowanie: 1,
+      szybkoscPisaniaKoduKomunikacja: 1,
+      szybkoscPisaniaKoduPracaZespolowa: 1,
+      szybkoscPisaniaKoduAdaptacja: 1,
+      szybkoscPisaniaKoduTesowanieWlasnegoKodu: 1,
+      szybkoscPisaniaKoduStylowanie: 1,
+      komunikacjaPracaZespolowa: 1,
+      frontKomunikacjaAdaptacja: 1,
+      komunikacjaTestowanie: 1,
+      komunikacjaStylowanie: 1,
+      pracaZespolowaAdaptacja: 1,
+      pracaZespolowaTestowanie: 1,
+      pracaZespolowaStylowanie: 1,
+      adaptacjaTestowanie: 1,
+      adaptacjaStylowanie: 1,
+      testowanieStylowanie: 1,
+    },
+    backendVariables: {
+      backDoswiadczenieSzybkoscPracy: 1,
+      backDoswiadczenieKomunikacja: 1,
+      backDoswiadczeniePracaZespolowa: 1,
+      backendDoswiadczenieAdaptacja: 1,
+      backDoswiadczenieTestowanie: 1,
+      backSzybkoscPisaniaKoduKomunikacja: 1,
+      backSzybkoscPisaniaKoduPracaZespolowa: 1,
+      backSzybkoscPisaniaKoduAdaptacja: 1,
+      backSzybkoscPisaniaKoduTesowanieWlasnegoKodu: 1,
+      backKomunikacjaPracaZespolowa: 1,
+      backendKomunikacjaAdaptacja: 1,
+      backKomunikacjaTestowanie: 1,
+      backPracaZespolowaAdaptacja: 1,
+      backPracaZespolowaTestowanie: 1,
+      backAdaptacjaTestowanie: 1,
+    },
+    testerVariables: {
+      testDoswiadczenieKomunikacja: 1,
+      doswiadczenieTestyManualne: 1,
+      doswiadczenieTestyAutomatyczne: 1,
+      testDoswiadczenieAdaptacja: 1,
+      komunikacjaTestyManualne: 1,
+      komunikacjaTestyAutomatyczne: 1,
+      testKomunikacjaAdaptacja: 1,
+      testyManualneTestyAutomatyczne: 1,
+      testyManualneAdaptacja: 1,
+      testyAutomatyczneAdaptacja: 1,
+    },
   });
   const [employees, setEmployees] = useState([
     {
@@ -97,7 +177,39 @@ const ahp = () => {
         );
       case 2:
         return (
-          <AhpMatrix
+          <AhpDesignerMatrix
+            ahpVariables={ahpVariables}
+            setAhpVariables={setAhpVariables}
+            employees={employees}
+          />
+        );
+      case 3:
+        return (
+          <AhpProjectManagerMatrix
+            ahpVariables={ahpVariables}
+            setAhpVariables={setAhpVariables}
+            employees={employees}
+          />
+        );
+      case 4:
+        return (
+          <AhpFrontendMatrix
+            ahpVariables={ahpVariables}
+            setAhpVariables={setAhpVariables}
+            employees={employees}
+          />
+        );
+      case 5:
+        return (
+          <AhpBackendMatrix
+            ahpVariables={ahpVariables}
+            setAhpVariables={setAhpVariables}
+            employees={employees}
+          />
+        );
+      case 6:
+        return (
+          <AhpTesterMatrix
             ahpVariables={ahpVariables}
             setAhpVariables={setAhpVariables}
             employees={employees}

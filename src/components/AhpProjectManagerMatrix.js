@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SelectComponent } from "./SelectComponent";
 import Image from "next/image";
 import nextPage from "./../assets/images/button-arrow.svg";
@@ -9,7 +9,208 @@ export const AhpProjectManagerMatrix = ({
   ahpVariables,
   setAhpVariables,
 }) => {
-  const [currentPosition, setCurrentPosition] = useState(0);
+  const [consistationRatioo, setConsistationRatioo] = useState(1);
+  useEffect(() => {
+    let firstColSum =
+      1 +
+      1 / ahpVariables.pmVariables.doswiadczenieZarzadzanieZespolem +
+      1 / ahpVariables.pmVariables.pmDoswiadczenieKomunikacja +
+      1 / ahpVariables.pmVariables.doswiadczenieOrganizacjaPracy +
+      1 / ahpVariables.pmVariables.doswiadczenieAdaptacja;
+
+    let secondColSum =
+      ahpVariables.pmVariables.doswiadczenieZarzadzanieZespolem +
+      1 +
+      1 / ahpVariables.pmVariables.ZarzadzanieZespolemKomunikacja +
+      1 / ahpVariables.pmVariables.ZarzadzanieZespolemOrganizacjaPracy +
+      1 / ahpVariables.pmVariables.ZarzadzanieZespolemAdaptacja;
+
+    let thirdColSum =
+      ahpVariables.pmVariables.pmDoswiadczenieKomunikacja +
+      ahpVariables.pmVariables.ZarzadzanieZespolemKomunikacja +
+      1 +
+      1 / ahpVariables.pmVariables.komunikacjaOrganizacjaPracy +
+      1 / ahpVariables.pmVariables.komunikacjaAdaptacja;
+
+    let fourtColSum =
+      ahpVariables.pmVariables.doswiadczenieOrganizacjaPracy +
+      ahpVariables.pmVariables.ZarzadzanieZespolemOrganizacjaPracy +
+      ahpVariables.pmVariables.komunikacjaOrganizacjaPracy +
+      1 +
+      1 / ahpVariables.pmVariables.organizacjaPracyAdaptacja;
+
+    let fifthColSum =
+      ahpVariables.pmVariables.doswiadczenieAdaptacja +
+      ahpVariables.pmVariables.ZarzadzanieZespolemAdaptacja +
+      ahpVariables.pmVariables.komunikacjaAdaptacja +
+      ahpVariables.pmVariables.organizacjaPracyAdaptacja +
+      1;
+
+    let firstRowFirstCol = 1 / firstColSum;
+
+    let firstRowsecondCol =
+      ahpVariables.pmVariables.doswiadczenieZarzadzanieZespolem / secondColSum;
+
+    let firstRowthirdCol =
+      ahpVariables.pmVariables.pmDoswiadczenieKomunikacja / thirdColSum;
+
+    let firstRowfourthCol =
+      ahpVariables.pmVariables.doswiadczenieOrganizacjaPracy / fourtColSum;
+
+    let firstRowfifthCol =
+      ahpVariables.pmVariables.doswiadczenieAdaptacja / fifthColSum;
+
+    let secondRowFirstCol =
+      1 /
+      ahpVariables.pmVariables.doswiadczenieZarzadzanieZespolem /
+      firstColSum;
+    let secondRowSecondCol = 1 / secondColSum;
+    let secondRowThirdCol =
+      ahpVariables.pmVariables.ZarzadzanieZespolemKomunikacja / thirdColSum;
+    let secondRowFourthCol =
+      ahpVariables.pmVariables.ZarzadzanieZespolemOrganizacjaPracy /
+      fourtColSum;
+    let secondRowFifthCol =
+      ahpVariables.pmVariables.ZarzadzanieZespolemAdaptacja / fifthColSum;
+
+    let thirdRowFirstCol =
+      1 / ahpVariables.pmVariables.pmDoswiadczenieKomunikacja / firstColSum;
+    let thirdRowlSecondCol =
+      1 /
+      ahpVariables.pmVariables.ZarzadzanieZespolemKomunikacja /
+      secondColSum;
+    let thirdRowThirdCol = 1 / thirdColSum;
+    let thirdRowFourCol =
+      ahpVariables.pmVariables.komunikacjaOrganizacjaPracy / fourtColSum;
+    let thirdRowFifthCol =
+      ahpVariables.pmVariables.komunikacjaAdaptacja / fifthColSum;
+
+    let fourthRowFirstCol =
+      1 / ahpVariables.pmVariables.doswiadczenieOrganizacjaPracy / firstColSum;
+
+    let fourthRowlSecondCol =
+      1 /
+      ahpVariables.pmVariables.ZarzadzanieZespolemOrganizacjaPracy /
+      secondColSum;
+    let fourthRowThirdCol =
+      1 / ahpVariables.pmVariables.komunikacjaOrganizacjaPracy / thirdColSum;
+    let fourthRowFourCol = 1 / fourtColSum;
+    let fourthRowFifthCol =
+      ahpVariables.pmVariables.organizacjaPracyAdaptacja / fifthColSum;
+
+    let fifthRowFirstCol =
+      1 / ahpVariables.pmVariables.doswiadczenieAdaptacja / firstColSum;
+    let fifthRowSecondCol =
+      1 / ahpVariables.pmVariables.ZarzadzanieZespolemAdaptacja / secondColSum;
+    let fifthRowThirdCol =
+      1 / ahpVariables.pmVariables.komunikacjaAdaptacja / thirdColSum;
+    let fiftRowFourthCol =
+      1 / ahpVariables.pmVariables.organizacjaPracyAdaptacja / fourtColSum;
+    let fifthRowFifthCol = 1 / fifthColSum;
+    let firstRowWeight =
+      (firstRowFirstCol +
+        firstRowsecondCol +
+        firstRowthirdCol +
+        firstRowfourthCol +
+        firstRowfifthCol) /
+      5;
+    let secondRowWeight =
+      (secondRowFirstCol +
+        secondRowSecondCol +
+        secondRowThirdCol +
+        secondRowFourthCol +
+        secondRowFifthCol) /
+      5;
+    let thirdRowWeight =
+      (thirdRowFirstCol +
+        thirdRowlSecondCol +
+        thirdRowThirdCol +
+        thirdRowFourCol +
+        thirdRowFifthCol) /
+      5;
+    let fourthRowWeight =
+      (fourthRowFirstCol +
+        fourthRowlSecondCol +
+        fourthRowThirdCol +
+        fourthRowFourCol +
+        fourthRowFifthCol) /
+      5;
+    let fifthRowWeight =
+      (fifthRowFirstCol +
+        fifthRowSecondCol +
+        fifthRowThirdCol +
+        fiftRowFourthCol +
+        fifthRowFifthCol) /
+      5;
+    //////////////////////////
+    let firstRowWeightSum =
+      (1 * firstRowWeight +
+        ahpVariables.pmVariables.doswiadczenieZarzadzanieZespolem *
+          secondRowWeight +
+        ahpVariables.pmVariables.pmDoswiadczenieKomunikacja * thirdRowWeight +
+        ahpVariables.pmVariables.doswiadczenieOrganizacjaPracy *
+          fourthRowWeight +
+        ahpVariables.pmVariables.doswiadczenieAdaptacja * fifthRowWeight) /
+      firstRowWeight;
+
+    let secondRowWeightSum =
+      ((1 / ahpVariables.pmVariables.doswiadczenieZarzadzanieZespolem) *
+        firstRowWeight +
+        1 * secondRowWeight +
+        ahpVariables.pmVariables.ZarzadzanieZespolemKomunikacja *
+          thirdRowWeight +
+        ahpVariables.pmVariables.ZarzadzanieZespolemOrganizacjaPracy *
+          fourthRowWeight +
+        ahpVariables.pmVariables.ZarzadzanieZespolemAdaptacja *
+          fifthRowWeight) /
+      secondRowWeight;
+
+    let thirdRowWeightSum =
+      ((1 / ahpVariables.pmVariables.pmDoswiadczenieKomunikacja) *
+        firstRowWeight +
+        (1 / ahpVariables.pmVariables.ZarzadzanieZespolemKomunikacja) *
+          secondRowWeight +
+        1 * thirdRowWeight +
+        ahpVariables.pmVariables.komunikacjaOrganizacjaPracy * fourthRowWeight +
+        ahpVariables.pmVariables.komunikacjaAdaptacja * fifthRowWeight) /
+      thirdRowWeight;
+
+    let fourthRowWeightSum =
+      ((1 / ahpVariables.pmVariables.doswiadczenieOrganizacjaPracy) *
+        firstRowWeight +
+        (1 / ahpVariables.pmVariables.ZarzadzanieZespolemOrganizacjaPracy) *
+          secondRowWeight +
+        (1 / ahpVariables.pmVariables.komunikacjaOrganizacjaPracy) *
+          thirdRowWeight +
+        1 * fourthRowWeight +
+        ahpVariables.pmVariables.organizacjaPracyAdaptacja * fifthRowWeight) /
+      fourthRowWeight;
+
+    let fifthRowWeightSum =
+      ((1 / ahpVariables.pmVariables.doswiadczenieAdaptacja) * firstRowWeight +
+        (1 / ahpVariables.pmVariables.ZarzadzanieZespolemAdaptacja) *
+          secondRowWeight +
+        (1 / ahpVariables.pmVariables.komunikacjaAdaptacja) * thirdRowWeight +
+        (1 / ahpVariables.pmVariables.organizacjaPracyAdaptacja) *
+          fourthRowWeight +
+        1 * fifthRowWeight) /
+      fifthRowWeight;
+
+    let lambdaMax =
+      (firstRowWeightSum +
+        secondRowWeightSum +
+        thirdRowWeightSum +
+        fourthRowWeightSum +
+        fifthRowWeightSum) /
+      5;
+
+    let consistencyIndex = (lambdaMax - 5) / (5 - 1);
+    let consistencyRatio = consistencyIndex / 1.11;
+
+    console.log(consistencyRatio);
+    setConsistationRatioo(consistencyRatio);
+  }, [ahpVariables]);
+
   return (
     <div>
       <div className="flex justify-center py-8 px-4 text-4xl font-semibold">
@@ -225,18 +426,22 @@ export const AhpProjectManagerMatrix = ({
             }
           />
         </div>
-        <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
-          <Image
-            src={nextPage}
-            alt="next page"
-            onClick={() =>
-              setAhpVariables({
-                ...ahpVariables,
-                currentPage: ahpVariables.currentPage + 1,
-              })
-            }
-          />
-        </div>
+        {consistationRatioo < 0.1 ? (
+          <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
+            <Image
+              src={nextPage}
+              alt="next page"
+              onClick={() =>
+                setAhpVariables({
+                  ...ahpVariables,
+                  currentPage: ahpVariables.currentPage + 1,
+                })
+              }
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

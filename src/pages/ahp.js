@@ -2,13 +2,32 @@ import { AhpHours } from "@/components/AhpHours";
 import { AhpDesignerMatrix } from "@/components/AhpDesignerMatrix";
 import { Formahp } from "@/components/Formahp";
 import { Header } from "@/components/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AhpProjectManagerMatrix } from "@/components/AhpProjectManagerMatrix";
 import { AhpFrontendMatrix } from "@/components/AhpFrontednMatrix";
 import { AhpBackendMatrix } from "@/components/AhpBackendMatrix";
 import { AhpTesterMatrix } from "@/components/AhpTesterMatrix";
+import { ResultsAhp } from "@/components/ResultsAhp";
 
 const ahp = () => {
+  const [sortedEmployeesArray, setSortedEmployeesArray] = useState({
+    designer: { bestDesigners: [] },
+    frontend: { bestFrontedn: [] },
+    backend: { bestBackend: [] },
+    tester: { bestTester: [] },
+    manager: { bestManger: [] },
+  });
+  const [employeesData, setEmployeesData] = useState();
+  useEffect(() => {
+    async function getPageData() {
+      const apiUrlEndPoint = "http://localhost:3000/api/getData";
+      const response = await fetch(apiUrlEndPoint);
+      const res = await response.json();
+      setEmployeesData(res.results);
+    }
+    getPageData();
+  }, []);
+
   const [ahpVariables, setAhpVariables] = useState({
     budget: 0,
     hours: 0,
@@ -181,6 +200,8 @@ const ahp = () => {
             ahpVariables={ahpVariables}
             setAhpVariables={setAhpVariables}
             employees={employees}
+            sortedEmployeesArray={sortedEmployeesArray}
+            setSortedEmployeesArray={setSortedEmployeesArray}
           />
         );
       case 3:
@@ -189,6 +210,8 @@ const ahp = () => {
             ahpVariables={ahpVariables}
             setAhpVariables={setAhpVariables}
             employees={employees}
+            sortedEmployeesArray={sortedEmployeesArray}
+            setSortedEmployeesArray={setSortedEmployeesArray}
           />
         );
       case 4:
@@ -197,6 +220,8 @@ const ahp = () => {
             ahpVariables={ahpVariables}
             setAhpVariables={setAhpVariables}
             employees={employees}
+            sortedEmployeesArray={sortedEmployeesArray}
+            setSortedEmployeesArray={setSortedEmployeesArray}
           />
         );
       case 5:
@@ -205,6 +230,8 @@ const ahp = () => {
             ahpVariables={ahpVariables}
             setAhpVariables={setAhpVariables}
             employees={employees}
+            sortedEmployeesArray={sortedEmployeesArray}
+            setSortedEmployeesArray={setSortedEmployeesArray}
           />
         );
       case 6:
@@ -213,6 +240,19 @@ const ahp = () => {
             ahpVariables={ahpVariables}
             setAhpVariables={setAhpVariables}
             employees={employees}
+            sortedEmployeesArray={sortedEmployeesArray}
+            setSortedEmployeesArray={setSortedEmployeesArray}
+          />
+        );
+      case 7:
+        return (
+          <ResultsAhp
+            ahpVariables={ahpVariables}
+            setAhpVariables={setAhpVariables}
+            employees={employees}
+            sortedEmployeesArray={sortedEmployeesArray}
+            setSortedEmployeesArray={setSortedEmployeesArray}
+            employeesData={employeesData}
           />
         );
     }

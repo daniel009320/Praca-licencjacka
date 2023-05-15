@@ -8,9 +8,47 @@ export const AhpBackendMatrix = ({
   employees,
   ahpVariables,
   setAhpVariables,
+  sortedEmployeesArray,
+  setSortedEmployeesArray,
 }) => {
+  const [consistationRatioo, setConsistationRatioo] = useState(1);
+  const [backendData, setbackendData] = useState("");
+  const [weights, setWeights] = useState("");
   useEffect(() => {
-    const [consistationRatioo, setConsistationRatioo] = useState(1);
+    async function getPageData() {
+      const apiUrlEndPoint = "http://localhost:3000/api/getDataBackend";
+      const response = await fetch(apiUrlEndPoint);
+      const res = await response.json();
+      setbackendData(res.results);
+    }
+    getPageData();
+  }, []);
+  const returnBestBackend = () => {
+    if (backendData) {
+      return backendData?.map((element) => {
+        return {
+          id: element.id,
+          value:
+            element.doswiadczenie * weights.firstRowWeight +
+            element.szybkosc_pisania_kodu * weights.secondRowWeight +
+            element.testowanie_wlasnego_kodu * weights.sixRowWeight +
+            element.praca_zespolowa * weights.fourthRowWeight +
+            element.komunikacja * weights.thirdRowWeight +
+            element.adaptacja * weights.fifthRowWeight,
+          employeeID: element.employee_id,
+        };
+      });
+    }
+  };
+  const sortBestBackend = () => {
+    if (backendData) {
+      return returnBestBackend().sort((a, b) => {
+        return b.value - a.value;
+      });
+    }
+  };
+
+  useEffect(() => {
     let firstColSum =
       1 +
       1 / ahpVariables.backendVariables.backDoswiadczenieSzybkoscPracy +
@@ -320,16 +358,23 @@ export const AhpBackendMatrix = ({
 
     let consistencyIndex = (lambdaMax - 6) / (6 - 1);
     let consistencyRatio = consistencyIndex / 1.25;
-    console.log(
-      firstRowWeightSum,
-      secondRowWeightSum,
-      thirdRowWeightSum,
-      fourthRowWeightSum,
-      fifthRowWeightSum,
-      sixRowWeightSum
-    );
-    console.log(lambdaMax, consistencyIndex, consistencyRatio);
+
     setConsistationRatioo(consistencyRatio);
+    setWeights({
+      firstRowWeight: fifthRowWeight,
+      secondRowWeight: secondRowWeight,
+      thirdRowWeight: thirdRowWeight,
+      fourthRowWeight: fourthRowWeight,
+      fifthRowWeight: fifthRowWeight,
+      sixRowWeight: sixRowWeight,
+    });
+    setSortedEmployeesArray({
+      ...sortedEmployeesArray,
+      backend: {
+        ...sortedEmployeesArray.backend,
+        bestBackend: sortBestBackend(),
+      },
+    });
   }, [ahpVariables]);
   return (
     <div>

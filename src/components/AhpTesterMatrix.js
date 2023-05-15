@@ -8,8 +8,45 @@ export const AhpTesterMatrix = ({
   employees,
   ahpVariables,
   setAhpVariables,
+  sortedEmployeesArray,
+  setSortedEmployeesArray,
 }) => {
   const [consistationRatioo, setConsistationRatioo] = useState(1);
+  const [testerData, setTesterData] = useState("");
+  const [weights, setWeights] = useState("");
+  useEffect(() => {
+    async function getPageData() {
+      const apiUrlEndPoint = "http://localhost:3000/api/getDataTester";
+      const response = await fetch(apiUrlEndPoint);
+      const res = await response.json();
+      setTesterData(res.results);
+    }
+    getPageData();
+  }, []);
+  const returnBestTester = () => {
+    if (testerData) {
+      return testerData?.map((element) => {
+        return {
+          id: element.id,
+          value:
+            element.doswiadczenie * weights.firstRowWeight +
+            element.komunikacja * weights.secondRowWeight +
+            element.testy_manualne * weights.thirdRowWeight +
+            element.testy_automatyczne * weights.fourthRowWeight +
+            element.adaptacja * weights.fifthRowWeight,
+          employeeID: element.employee_id,
+        };
+      });
+    }
+  };
+  const sortBestTester = () => {
+    if (testerData) {
+      return returnBestTester().sort((a, b) => {
+        return b.value - a.value;
+      });
+    }
+  };
+
   useEffect(() => {
     let firstColSum =
       1 +
@@ -214,8 +251,21 @@ export const AhpTesterMatrix = ({
     let consistencyIndex = (lambdaMax - 5) / (5 - 1);
     let consistencyRatio = consistencyIndex / 1.11;
 
-    console.log(consistencyRatio);
     setConsistationRatioo(consistencyRatio);
+    setWeights({
+      firstRowWeight: fifthRowWeight,
+      secondRowWeight: secondRowWeight,
+      thirdRowWeight: thirdRowWeight,
+      fourthRowWeight: fourthRowWeight,
+      fifthRowWeight: fifthRowWeight,
+    });
+    setSortedEmployeesArray({
+      ...sortedEmployeesArray,
+      tester: {
+        ...sortedEmployeesArray.tester,
+        bestTester: sortBestTester(),
+      },
+    });
   }, [ahpVariables]);
   return (
     <div>

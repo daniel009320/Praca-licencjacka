@@ -8,8 +8,47 @@ export const AhpFrontendMatrix = ({
   employees,
   ahpVariables,
   setAhpVariables,
+  sortedEmployeesArray,
+  setSortedEmployeesArray,
 }) => {
   const [consistationRatioo, setConsistationRatioo] = useState(1);
+  const [frontendData, setFrontendData] = useState("");
+  const [weights, setWeights] = useState("");
+  useEffect(() => {
+    async function getPageData() {
+      const apiUrlEndPoint = "http://localhost:3000/api/getDataFrontend";
+      const response = await fetch(apiUrlEndPoint);
+      const res = await response.json();
+      setFrontendData(res.results);
+    }
+    getPageData();
+  }, []);
+  const returnBestFrontend = () => {
+    if (frontendData) {
+      return frontendData?.map((element) => {
+        return {
+          id: element.id,
+          value:
+            element.doswiadczenie * weights.firstRowWeight +
+            element.szybkosc_pisania_kodu * weights.secondRowWeight +
+            element.testowanie_wlasnego_kodu * weights.sixRowWeight +
+            element.praca_zespolowa * weights.fourthRowWeight +
+            element.komunikacja * weights.thirdRowWeight +
+            element.adaptacja * weights.fifthRowWeight +
+            element.stylowanie * weights.sevenRowWeight,
+          employeeID: element.employee_id,
+        };
+      });
+    }
+  };
+  const sortBestFrontend = () => {
+    if (frontendData) {
+      return returnBestFrontend().sort((a, b) => {
+        return b.value - a.value;
+      });
+    }
+  };
+
   useEffect(() => {
     let firstColSum =
       1 +
@@ -391,8 +430,23 @@ export const AhpFrontendMatrix = ({
     let consistencyIndex = (lambdaMax - 7) / (7 - 1);
     let consistencyRatio = consistencyIndex / 1.35;
 
-    console.log(consistencyRatio);
     setConsistationRatioo(consistencyRatio);
+    setWeights({
+      firstRowWeight: fifthRowWeight,
+      secondRowWeight: secondRowWeight,
+      thirdRowWeight: thirdRowWeight,
+      fourthRowWeight: fourthRowWeight,
+      fifthRowWeight: fifthRowWeight,
+      sixRowWeight: sixRowWeight,
+      sevenRowWeight: sevenRowWeight,
+    });
+    setSortedEmployeesArray({
+      ...sortedEmployeesArray,
+      frontend: {
+        ...sortedEmployeesArray.fronted,
+        bestFrontend: sortBestFrontend(),
+      },
+    });
   }, [ahpVariables]);
   return (
     <div>

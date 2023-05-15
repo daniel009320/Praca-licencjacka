@@ -9,9 +9,12 @@ export const AhpDesignerMatrix = ({
   employees,
   ahpVariables,
   setAhpVariables,
+  sortedEmployeesArray,
+  setSortedEmployeesArray,
 }) => {
   const [consistationRatioo, setConsistationRatioo] = useState(1);
   const [designerData, setDesignerData] = useState("");
+  const [weights, setWeights] = useState("");
   useEffect(() => {
     async function getPageData() {
       const apiUrlEndPoint = "http://localhost:3000/api/getDataDesigner";
@@ -22,12 +25,29 @@ export const AhpDesignerMatrix = ({
     getPageData();
   }, []);
   const returnBestDesiger = () => {
-    return designerData.map((element) => {
-      element;
-    });
+    if (designerData) {
+      return designerData?.map((element) => {
+        return {
+          id: element.id,
+          value:
+            element.doswiadczenie * weights.firstRowWeight +
+            element.kreatywnosc * weights.fourthRowWeight +
+            element.szybkosc_pracy * weights.secondRowWeight +
+            element.komunikacja * weights.thirdRowWeight +
+            element.responsywnosc * weights.fifthRowWeight,
+          employeeID: element.employee_id,
+        };
+      });
+    }
+  };
+  const sortBestDesigners = () => {
+    if (designerData) {
+      return returnBestDesiger().sort((a, b) => {
+        return b.value - a.value;
+      });
+    }
   };
 
-  console.log(designerData, returnBestDesiger());
   useEffect(() => {
     let firstColSum =
       1 +
@@ -235,8 +255,21 @@ export const AhpDesignerMatrix = ({
     let consistencyIndex = (lambdaMax - 5) / (5 - 1);
     let consistencyRatio = consistencyIndex / 1.11;
 
-    console.log(consistencyRatio);
     setConsistationRatioo(consistencyRatio);
+    setWeights({
+      firstRowWeight: fifthRowWeight,
+      secondRowWeight: secondRowWeight,
+      thirdRowWeight: thirdRowWeight,
+      fourthRowWeight: fourthRowWeight,
+      fifthRowWeight: fifthRowWeight,
+    });
+    setSortedEmployeesArray({
+      ...sortedEmployeesArray,
+      designer: {
+        ...sortedEmployeesArray.designer,
+        bestDesigners: sortBestDesigners(),
+      },
+    });
   }, [ahpVariables]);
 
   return (

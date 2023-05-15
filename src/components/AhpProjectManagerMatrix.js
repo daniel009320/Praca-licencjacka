@@ -8,8 +8,45 @@ export const AhpProjectManagerMatrix = ({
   employees,
   ahpVariables,
   setAhpVariables,
+  sortedEmployeesArray,
+  setSortedEmployeesArray,
 }) => {
   const [consistationRatioo, setConsistationRatioo] = useState(1);
+  const [managerData, setManagerData] = useState("");
+  const [weights, setWeights] = useState("");
+  useEffect(() => {
+    async function getPageData() {
+      const apiUrlEndPoint = "http://localhost:3000/api/getDataManager";
+      const response = await fetch(apiUrlEndPoint);
+      const res = await response.json();
+      setManagerData(res.results);
+    }
+    getPageData();
+  }, []);
+  const returnBestManager = () => {
+    if (managerData) {
+      return managerData?.map((element) => {
+        return {
+          id: element.id,
+          value:
+            element.doswiadczenie * weights.firstRowWeight +
+            element.zarzadzanie_zespolem * weights.secondRowWeight +
+            element.komunikacja * weights.thirdRowWeight +
+            element.organizacja_pracy * weights.fourthRowWeight +
+            element.adaptacja * weights.fifthRowWeight,
+          employeeID: element.employee_id,
+        };
+      });
+    }
+  };
+  const sortBestManager = () => {
+    if (managerData) {
+      return returnBestManager().sort((a, b) => {
+        return b.value - a.value;
+      });
+    }
+  };
+
   useEffect(() => {
     let firstColSum =
       1 +
@@ -207,8 +244,21 @@ export const AhpProjectManagerMatrix = ({
     let consistencyIndex = (lambdaMax - 5) / (5 - 1);
     let consistencyRatio = consistencyIndex / 1.11;
 
-    console.log(consistencyRatio);
     setConsistationRatioo(consistencyRatio);
+    setWeights({
+      firstRowWeight: fifthRowWeight,
+      secondRowWeight: secondRowWeight,
+      thirdRowWeight: thirdRowWeight,
+      fourthRowWeight: fourthRowWeight,
+      fifthRowWeight: fifthRowWeight,
+    });
+    setSortedEmployeesArray({
+      ...sortedEmployeesArray,
+      manager: {
+        ...sortedEmployeesArray.manager,
+        bestManager: sortBestManager(),
+      },
+    });
   }, [ahpVariables]);
 
   return (

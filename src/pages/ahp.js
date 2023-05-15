@@ -12,7 +12,7 @@ import { ResultsAhp } from "@/components/ResultsAhp";
 const ahp = () => {
   const [sortedEmployeesArray, setSortedEmployeesArray] = useState({
     designer: { bestDesigners: [] },
-    frontend: { bestFrontedn: [] },
+    frontend: { bestFrontends: [] },
     backend: { bestBackend: [] },
     tester: { bestTester: [] },
     manager: { bestManger: [] },

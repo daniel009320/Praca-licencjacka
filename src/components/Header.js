@@ -1,16 +1,19 @@
 import logo from "./../assets/images/form.png";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Header = () => {
   return (
     <div className=" pt-6 pb-6  border-b-2 border-black ">
       <div className="flex items-center justify-between">
         <div>
-          <Image
+         <Link href="/">
+         <Image
             className="w-16 object-contain cursor-pointer"
             src={logo}
             alt="logo"
           />
+          </Link>
         </div>
         <div className="flex ">
           <div></div>
@@ -24,9 +27,9 @@ export const Header = () => {
               Dodaj pracownika
             </button>
           </div>
-          <button className="text-white bg-black font-semibold px-6 py-3 rounded-full ">
+          <Link href="/" className="text-white bg-black font-semibold px-6 py-3 rounded-full ">
             Strona główna
-          </button>
+          </Link>
         </div>
       </div>
     </div>

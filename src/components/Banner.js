@@ -39,10 +39,13 @@ export const Banner = () => {
               AHP
             </Link>
 
-            <button className="rounded-full  px-6 py-2 mt-4  text-white bg-black text-2xl btn-hover">
+            <Link
+              href="/saw"
+              className="rounded-full  px-6 py-2 mt-4  text-white bg-black text-2xl btn-hover"
+            >
               {" "}
               SAW
-            </button>
+            </Link>
           </div>
         </div>
         <div className="flex justify-center lg-pt-0 pt-10">

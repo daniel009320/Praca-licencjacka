@@ -15,6 +15,9 @@ export const ResultsAhp = ({
     selectedManager: [],
     selectedTesters: [],
   });
+  let frontendBudget = 0;
+  let testerBudget = 0;
+  let backendBudget = 0;
 
   console.log(selectedEmployees, ahpVariables);
 
@@ -98,14 +101,23 @@ export const ResultsAhp = ({
         {selectedEmployees.selectedManager.map((element, index) => {
           if (index <= 0) {
             return (
-              <div
-                className="flex gap-10 py-4 text-2xl w-full justify-center "
-                key={index}
-              >
-                <p>{element.imie}</p>
-                <p>{element.nazwisko}</p>
-                <p>{element.zawod}</p>
-                <p>{element.zarobki + " zł / godzine"}</p>
+              <div>
+                <div
+                  className="flex gap-10 py-4 text-2xl w-full justify-center "
+                  key={index}
+                >
+                  <p>{element.imie}</p>
+                  <p>{element.nazwisko}</p>
+                  <p>{element.zawod}</p>
+                  <p>{element.zarobki + " zł / godzine"}</p>
+                </div>
+                <div className="flex items-center justify-center text-3xl py-4 font-semibold ">
+                  <p>
+                    {"Budżet dla Projekt Managera: " +
+                      element.zarobki * ahpVariables.pmHours +
+                      " zł"}
+                  </p>
+                </div>
               </div>
             );
           }
@@ -117,14 +129,23 @@ export const ResultsAhp = ({
           {selectedEmployees.selectedDesigners.map((element, index) => {
             if (ahpVariables.designer && index < 1) {
               return (
-                <div
-                  className="flex gap-10 py-4 text-2xl w-full justify-center "
-                  key={index}
-                >
-                  <p>{element.imie}</p>
-                  <p>{element.nazwisko}</p>
-                  <p>{element.zawod}</p>
-                  <p>{element.zarobki + " zł / godzine"}</p>
+                <div>
+                  <div
+                    className="flex gap-10 py-4 text-2xl w-full justify-center "
+                    key={index}
+                  >
+                    <p>{element.imie}</p>
+                    <p>{element.nazwisko}</p>
+                    <p>{element.zawod}</p>
+                    <p>{element.zarobki + " zł / godzine"}</p>
+                  </div>
+                  <div className="flex items-center justify-center text-3xl py-4 font-semibold ">
+                    <p>
+                      {"Budżet dla Grafika: " +
+                        element.zarobki * ahpVariables.designerHours +
+                        " zł"}
+                    </p>
+                  </div>
                 </div>
               );
             }
@@ -139,15 +160,35 @@ export const ResultsAhp = ({
         </h2>
         {selectedEmployees.selectedFrontends.map((element, index) => {
           if (ahpVariables.frontend >= index + 1) {
+            frontendBudget += element.zarobki * ahpVariables.frontHours;
+
             return (
-              <div
-                className="flex gap-10 py-4 text-2xl w-full justify-center "
-                key={index}
-              >
-                <p>{element.imie}</p>
-                <p>{element.nazwisko}</p>
-                <p>{element.zawod}</p>
-                <p>{element.zarobki + " zł / godzine"}</p>
+              <div>
+                <div
+                  className="flex gap-10 py-4 text-2xl w-full justify-center "
+                  key={index}
+                >
+                  <p>{element.imie}</p>
+                  <p>{element.nazwisko}</p>
+                  <p>{element.zawod}</p>
+                  <p>{element.zarobki + " zł / godzine"}</p>
+                  <p>
+                    {element.zarobki *
+                      (ahpVariables.frontHours / ahpVariables.frontend) +
+                      " zł"}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center text-3xl py-4 font-semibold ">
+                  {ahpVariables.frontend - 1 === index ? (
+                    <p>
+                      {"Budżet dla Frontendowców: " +
+                        frontendBudget / ahpVariables.frontend +
+                        " zł"}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             );
           }
@@ -159,15 +200,34 @@ export const ResultsAhp = ({
         </h2>
         {selectedEmployees.selectedBakends.map((element, index) => {
           if (ahpVariables.backend >= index + 1) {
+            backendBudget += element.zarobki * ahpVariables.backendHours;
             return (
-              <div
-                className="flex gap-10 py-4 text-2xl w-full justify-center "
-                key={index}
-              >
-                <p>{element.imie}</p>
-                <p>{element.nazwisko}</p>
-                <p>{element.zawod}</p>
-                <p>{element.zarobki + " zł / godzine"}</p>
+              <div>
+                <div
+                  className="flex gap-10 py-4 text-2xl w-full justify-center "
+                  key={index}
+                >
+                  <p>{element.imie}</p>
+                  <p>{element.nazwisko}</p>
+                  <p>{element.zawod}</p>
+                  <p>{element.zarobki + " zł / godzine"}</p>
+                  <p>
+                    {element.zarobki *
+                      (ahpVariables.backendHours / ahpVariables.backend) +
+                      " zł"}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center text-3xl py-4 font-semibold ">
+                  {ahpVariables.backend - 1 === index ? (
+                    <p>
+                      {"Budżet dla Backendowców: " +
+                        backendBudget / ahpVariables.backend +
+                        " zł"}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             );
           }
@@ -177,15 +237,34 @@ export const ResultsAhp = ({
         <h2 className="flex w-full justify-center text-4xl pb-6 ">Testerzy</h2>
         {selectedEmployees.selectedTesters.map((element, index) => {
           if (ahpVariables.tester >= index + 1) {
+            testerBudget += element.zarobki * ahpVariables.testerHours;
             return (
-              <div
-                className="flex gap-10 py-4 text-2xl w-full justify-center "
-                key={index}
-              >
-                <p>{element.imie}</p>
-                <p>{element.nazwisko}</p>
-                <p>{element.zawod}</p>
-                <p>{element.zarobki + " zł / godzine"}</p>
+              <div>
+                <div
+                  className="flex gap-10 py-4 text-2xl w-full justify-center "
+                  key={index}
+                >
+                  <p>{element.imie}</p>
+                  <p>{element.nazwisko}</p>
+                  <p>{element.zawod}</p>
+                  <p>{element.zarobki + " zł / godzine"}</p>
+                  <p>
+                    {element.zarobki *
+                      (ahpVariables.testerHours / ahpVariables.tester) +
+                      " zł"}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center text-3xl py-4 font-semibold ">
+                  {ahpVariables.tester - 1 === index ? (
+                    <p>
+                      {"Budżet dla Testerów: " +
+                        testerBudget / ahpVariables.tester +
+                        " zł"}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             );
           }

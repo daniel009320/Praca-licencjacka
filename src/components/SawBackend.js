@@ -72,6 +72,35 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
           break;
       }
   };
+  let weightSum =
+    sawVariables.backendVariables.backDoswiadczenie +
+    sawVariables.backendVariables.backSzybkoscPisaniaKodu +
+    sawVariables.backendVariables.backKomunikacja +
+    sawVariables.backendVariables.backPracaZespolowa +
+    sawVariables.backendVariables.backAdaptacja +
+    sawVariables.backendVariables.backTestowanieWlasnegoKodu;
+
+  let doswiadczenieWeight =
+    sawVariables.backendVariables.backDoswiadczenie / weightSum;
+  let szybkoscPisaniaKoduWeight =
+    sawVariables.backendVariables.backSzybkoscPisaniaKodu / weightSum;
+  let komunikacjaWeight =
+    sawVariables.backendVariables.backKomunikacja / weightSum;
+  let pracaZespolowaWeight =
+    sawVariables.backendVariables.backPracaZespolowa / weightSum;
+  let adaptacjaWeight = sawVariables.backendVariables.backAdaptacja / weightSum;
+  let testowanieWlasnegoKoduWeight =
+    sawVariables.backendVariables.backTestowanieWlasnegoKodu / weightSum;
+
+  console.log(
+    weightSum,
+    doswiadczenieWeight,
+    szybkoscPisaniaKoduWeight,
+    komunikacjaWeight,
+    pracaZespolowaWeight,
+    adaptacjaWeight,
+    testowanieWlasnegoKoduWeight
+  );
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
       <div className="py-6 text-5xl">
@@ -85,19 +114,24 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                backendVariables: {
-                  ...sawVariables.backendVariables,
-                  backDoswiadczenie:
-                    sawVariables.backendVariables.backDoswiadczenie + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.backendVariables.backDoswiadczenie < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  backendVariables: {
+                    ...sawVariables.backendVariables,
+                    backDoswiadczenie:
+                      sawVariables.backendVariables.backDoswiadczenie + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.backendVariables.backDoswiadczenie}
             onChange={(e) => {
               parseString(e, "backDoswiadczenie");
@@ -108,7 +142,7 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.backendVariables.backDoswiadczenie > 0) {
+              if (sawVariables.backendVariables.backDoswiadczenie > 1) {
                 setSawVariables({
                   ...sawVariables,
                   backendVariables: {
@@ -132,19 +166,24 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                backendVariables: {
-                  ...sawVariables.backendVariables,
-                  backSzybkoscPisaniaKodu:
-                    sawVariables.backendVariables.backSzybkoscPisaniaKodu + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.backendVariables.backSzybkoscPisaniaKodu < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  backendVariables: {
+                    ...sawVariables.backendVariables,
+                    backSzybkoscPisaniaKodu:
+                      sawVariables.backendVariables.backSzybkoscPisaniaKodu + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.backendVariables.backSzybkoscPisaniaKodu}
             onChange={(e) => {
               parseString(e, "backSzybkoscPisaniaKodu");
@@ -155,7 +194,7 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.backendVariables.backSzybkoscPisaniaKodu > 0) {
+              if (sawVariables.backendVariables.backSzybkoscPisaniaKodu > 1) {
                 setSawVariables({
                   ...sawVariables,
                   backendVariables: {
@@ -176,19 +215,24 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                backendVariables: {
-                  ...sawVariables.backendVariables,
-                  backKomunikacja:
-                    sawVariables.backendVariables.backKomunikacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.backendVariables.backKomunikacja < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  backendVariables: {
+                    ...sawVariables.backendVariables,
+                    backKomunikacja:
+                      sawVariables.backendVariables.backKomunikacja + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.backendVariables.backKomunikacja}
             onChange={(e) => {
               parseString(e, "backKomunikacja");
@@ -199,7 +243,7 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.backendVariables.backKomunikacja > 0) {
+              if (sawVariables.backendVariables.backKomunikacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   backendVariables: {
@@ -220,19 +264,24 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                backendVariables: {
-                  ...sawVariables.backendVariables,
-                  backPracaZespolowa:
-                    sawVariables.backendVariables.backPracaZespolowa + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.backendVariables.backPracaZespolowa < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  backendVariables: {
+                    ...sawVariables.backendVariables,
+                    backPracaZespolowa:
+                      sawVariables.backendVariables.backPracaZespolowa + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.backendVariables.backPracaZespolowa}
             onChange={(e) => {
               parseString(e, "backPracaZespolowa");
@@ -243,7 +292,7 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.backendVariables.backPracaZespolowa > 0) {
+              if (sawVariables.backendVariables.backPracaZespolowa > 1) {
                 setSawVariables({
                   ...sawVariables,
                   backendVariables: {
@@ -264,19 +313,24 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                backendVariables: {
-                  ...sawVariables.backendVariables,
-                  backAdaptacja:
-                    sawVariables.backendVariables.backAdaptacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.backendVariables.backAdaptacja < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  backendVariables: {
+                    ...sawVariables.backendVariables,
+                    backAdaptacja:
+                      sawVariables.backendVariables.backAdaptacja + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.backendVariables.backAdaptacja}
             onChange={(e) => {
               parseString(e, "backAdaptacja");
@@ -287,7 +341,7 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.backendVariables.backAdaptacja > 0) {
+              if (sawVariables.backendVariables.backAdaptacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   backendVariables: {
@@ -309,20 +363,27 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                backendVariables: {
-                  ...sawVariables.backendVariables,
-                  backTestowanieWlasnegoKodu:
-                    sawVariables.backendVariables.backTestowanieWlasnegoKodu +
-                    1,
-                },
-              })
-            }
+            onClick={() => {
+              if (
+                sawVariables.backendVariables.backTestowanieWlasnegoKodu < 10
+              ) {
+                setSawVariables({
+                  ...sawVariables,
+                  backendVariables: {
+                    ...sawVariables.backendVariables,
+                    backTestowanieWlasnegoKodu:
+                      sawVariables.backendVariables.backTestowanieWlasnegoKodu +
+                      1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.backendVariables.backTestowanieWlasnegoKodu}
             onChange={(e) => {
               parseString(e, "backTestowanieWlasnegoKodu");
@@ -334,7 +395,7 @@ export const SawBackend = ({ sawVariables, setSawVariables }) => {
             className="cursor-pointer"
             onClick={() => {
               if (
-                sawVariables.backendVariables.backTestowanieWlasnegoKodu > 0
+                sawVariables.backendVariables.backTestowanieWlasnegoKodu > 1
               ) {
                 setSawVariables({
                   ...sawVariables,

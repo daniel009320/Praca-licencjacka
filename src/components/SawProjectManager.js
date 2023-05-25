@@ -63,6 +63,30 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
           break;
       }
   };
+  let weightSum =
+    sawVariables.pmVariables.pmDoswiadczenie +
+    sawVariables.pmVariables.zarzadzanieZespolem +
+    sawVariables.pmVariables.pmKomunikacja +
+    sawVariables.pmVariables.organizacjaPracy +
+    sawVariables.pmVariables.adaptacja;
+
+  let doswiadczenieWeight =
+    sawVariables.pmVariables.pmDoswiadczenie / weightSum;
+  let zarzadzanieZespolemWeight =
+    sawVariables.pmVariables.zarzadzanieZespolem / weightSum;
+  let komunikacjaWeight = sawVariables.pmVariables.pmKomunikacja / weightSum;
+  let organizacjaPracyWeight =
+    sawVariables.pmVariables.organizacjaPracy / weightSum;
+  let adaptacjaWeight = sawVariables.pmVariables.adaptacja / weightSum;
+
+  console.log(
+    weightSum,
+    doswiadczenieWeight,
+    zarzadzanieZespolemWeight,
+    komunikacjaWeight,
+    organizacjaPracyWeight,
+    adaptacjaWeight
+  );
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
       <div className="py-6 text-5xl">
@@ -76,18 +100,24 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                pmVariables: {
-                  ...sawVariables.pmVariables,
-                  pmDoswiadczenie: sawVariables.pmVariables.pmDoswiadczenie + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.pmVariables.pmDoswiadczenie < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  pmVariables: {
+                    ...sawVariables.pmVariables,
+                    pmDoswiadczenie:
+                      sawVariables.pmVariables.pmDoswiadczenie + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.pmVariables.pmDoswiadczenie}
             onChange={(e) => {
               parseString(e, "pmDoswiadczenie");
@@ -98,7 +128,7 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.pmVariables.pmDoswiadczenie > 0) {
+              if (sawVariables.pmVariables.pmDoswiadczenie > 1) {
                 setSawVariables({
                   ...sawVariables,
                   pmVariables: {
@@ -119,19 +149,24 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                pmVariables: {
-                  ...sawVariables.pmVariables,
-                  zarzadzanieZespolem:
-                    sawVariables.pmVariables.zarzadzanieZespolem + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.pmVariables.zarzadzanieZespolem < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  pmVariables: {
+                    ...sawVariables.pmVariables,
+                    zarzadzanieZespolem:
+                      sawVariables.pmVariables.zarzadzanieZespolem + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.pmVariables.zarzadzanieZespolem}
             onChange={(e) => {
               parseString(e, "zarzadzanieZespolem");
@@ -142,7 +177,7 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.pmVariables.zarzadzanieZespolem > 0) {
+              if (sawVariables.pmVariables.zarzadzanieZespolem > 1) {
                 setSawVariables({
                   ...sawVariables,
                   pmVariables: {
@@ -163,18 +198,23 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                pmVariables: {
-                  ...sawVariables.pmVariables,
-                  pmKomunikacja: sawVariables.pmVariables.pmKomunikacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.pmVariables.pmKomunikacja < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  pmVariables: {
+                    ...sawVariables.pmVariables,
+                    pmKomunikacja: sawVariables.pmVariables.pmKomunikacja + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.pmVariables.pmKomunikacja}
             onChange={(e) => {
               parseString(e, "pmKomunikacja");
@@ -185,7 +225,7 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.pmVariables.pmKomunikacja > 0) {
+              if (sawVariables.pmVariables.pmKomunikacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   pmVariables: {
@@ -205,19 +245,24 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                pmVariables: {
-                  ...sawVariables.pmVariables,
-                  organizacjaPracy:
-                    sawVariables.pmVariables.organizacjaPracy + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.pmVariables.organizacjaPracy < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  pmVariables: {
+                    ...sawVariables.pmVariables,
+                    organizacjaPracy:
+                      sawVariables.pmVariables.organizacjaPracy + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.pmVariables.organizacjaPracy}
             onChange={(e) => {
               parseString(e, "organizacjaPracy");
@@ -228,7 +273,7 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.pmVariables.organizacjaPracy > 0) {
+              if (sawVariables.pmVariables.organizacjaPracy > 1) {
                 setSawVariables({
                   ...sawVariables,
                   pmVariables: {
@@ -251,18 +296,23 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                pmVariables: {
-                  ...sawVariables.pmVariables,
-                  adaptacja: sawVariables.pmVariables.adaptacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.pmVariables.adaptacja < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  pmVariables: {
+                    ...sawVariables.pmVariables,
+                    adaptacja: sawVariables.pmVariables.adaptacja + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.pmVariables.adaptacja}
             onChange={(e) => {
               parseString(e, "adaptacja");
@@ -273,7 +323,7 @@ export const SawProjectManager = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.pmVariables.adaptacja > 0) {
+              if (sawVariables.pmVariables.adaptacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   pmVariables: {

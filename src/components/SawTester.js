@@ -63,6 +63,31 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
           break;
       }
   };
+  let weightSum =
+    sawVariables.testerVariables.testDoswiadczenie +
+    sawVariables.testerVariables.testKomunikacja +
+    sawVariables.testerVariables.testTestyManualne +
+    sawVariables.testerVariables.testTestyAutomatyczne +
+    sawVariables.testerVariables.testAdaptacja;
+
+  let doswiadczenieWeight =
+    sawVariables.testerVariables.testDoswiadczenie / weightSum;
+  let komunikacjaWeight =
+    sawVariables.testerVariables.testKomunikacja / weightSum;
+  let testyManualneWeight =
+    sawVariables.testerVariables.testTestyManualne / weightSum;
+  let testyAutomatyczneWeight =
+    sawVariables.testerVariables.testTestyAutomatyczne / weightSum;
+  let adaptacjaWeight = sawVariables.testerVariables.testAdaptacja / weightSum;
+
+  console.log(
+    weightSum,
+    doswiadczenieWeight,
+    komunikacjaWeight,
+    testyManualneWeight,
+    testyAutomatyczneWeight,
+    adaptacjaWeight
+  );
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
       <div className="py-6 text-5xl">
@@ -76,19 +101,24 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                testerVariables: {
-                  ...sawVariables.testerVariables,
-                  testDoswiadczenie:
-                    sawVariables.testerVariables.testDoswiadczenie + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.testerVariables.testDoswiadczenie < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  testerVariables: {
+                    ...sawVariables.testerVariables,
+                    testDoswiadczenie:
+                      sawVariables.testerVariables.testDoswiadczenie + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.testerVariables.testDoswiadczenie}
             onChange={(e) => {
               parseString(e, "testDoswiadczenie");
@@ -99,7 +129,7 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.testerVariables.testDoswiadczenie > 0) {
+              if (sawVariables.testerVariables.testDoswiadczenie > 1) {
                 setSawVariables({
                   ...sawVariables,
                   testerVariables: {
@@ -120,19 +150,24 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                testerVariables: {
-                  ...sawVariables.testerVariables,
-                  testKomunikacja:
-                    sawVariables.testerVariables.testKomunikacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.testerVariables.testKomunikacja < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  testerVariables: {
+                    ...sawVariables.testerVariables,
+                    testKomunikacja:
+                      sawVariables.testerVariables.testKomunikacja + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.testerVariables.testKomunikacja}
             onChange={(e) => {
               parseString(e, "testKomunikacja");
@@ -143,7 +178,7 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.testerVariables.testKomunikacja > 0) {
+              if (sawVariables.testerVariables.testKomunikacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   testerVariables: {
@@ -164,19 +199,24 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                testerVariables: {
-                  ...sawVariables.testerVariables,
-                  testTestyManualne:
-                    sawVariables.testerVariables.testTestyManualne + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.testerVariables.testTestyManualne < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  testerVariables: {
+                    ...sawVariables.testerVariables,
+                    testTestyManualne:
+                      sawVariables.testerVariables.testTestyManualne + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.testerVariables.testTestyManualne}
             onChange={(e) => {
               parseString(e, "testTestyManualne");
@@ -187,7 +227,7 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.testerVariables.testTestyManualne > 0) {
+              if (sawVariables.testerVariables.testTestyManualne > 1) {
                 setSawVariables({
                   ...sawVariables,
                   testerVariables: {
@@ -208,19 +248,24 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                testerVariables: {
-                  ...sawVariables.testerVariables,
-                  testTestyAutomatyczne:
-                    sawVariables.testerVariables.testTestyAutomatyczne + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.testerVariables.testTestyAutomatyczne < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  testerVariables: {
+                    ...sawVariables.testerVariables,
+                    testTestyAutomatyczne:
+                      sawVariables.testerVariables.testTestyAutomatyczne + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.testerVariables.testTestyAutomatyczne}
             onChange={(e) => {
               parseString(e, "testTestyAutomatyczne");
@@ -231,7 +276,7 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.testerVariables.testTestyAutomatyczne > 0) {
+              if (sawVariables.testerVariables.testTestyAutomatyczne > 1) {
                 setSawVariables({
                   ...sawVariables,
                   testerVariables: {
@@ -252,18 +297,24 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                testerVariables: {
-                  ...sawVariables.testerVariables,
-                  testAdaptacja: sawVariables.testerVariables.testAdaptacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.testerVariables.testAdaptacja < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  testerVariables: {
+                    ...sawVariables.testerVariables,
+                    testAdaptacja:
+                      sawVariables.testerVariables.testAdaptacja + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.testerVariables.testAdaptacja}
             onChange={(e) => {
               parseString(e, "testAdaptacja");
@@ -274,7 +325,7 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.testerVariables.testAdaptacja > 0) {
+              if (sawVariables.testerVariables.testAdaptacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   testerVariables: {

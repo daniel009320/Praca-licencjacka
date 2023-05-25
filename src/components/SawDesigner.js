@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { object, string, number, date, InferType } from "yup";
 import Image from "next/image";
 import budget from "./../assets/images/MoneyBag.svg";
@@ -10,8 +11,21 @@ import tester from "./../assets/images/TestResults.svg";
 import grafic from "./../assets/images/Illustrator.svg";
 import nextPage from "./../assets/images/button-arrow.svg";
 import previousPage from "./../assets/images/button-arrow-down.svg";
+import { List } from "@mui/material";
 
 export const SawDesigner = ({ sawVariables, setSawVariables }) => {
+  const [designerData, setDesignerData] = useState("");
+  const [changedDesignerData, setChangedData] = useState("");
+  useEffect(() => {
+    async function getPageData() {
+      const apiUrlEndPoint = "http://localhost:3000/api/getDataDesigner";
+      const response = await fetch(apiUrlEndPoint);
+      const res = await response.json();
+      setDesignerData(res.results);
+    }
+    getPageData();
+  }, []);
+  console.log(designerData);
   const parseString = (e, updatedVariables) => {
     const numberRegex = /^\d+$/;
     if (numberRegex.test(e.target.value))
@@ -63,6 +77,39 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
           break;
       }
   };
+  let weightSum =
+    sawVariables.designerVariables.doswiadczenie +
+    sawVariables.designerVariables.szybkoscPracy +
+    sawVariables.designerVariables.komunikacja +
+    sawVariables.designerVariables.kreatywnosc +
+    sawVariables.designerVariables.responsywnosc;
+
+  let doswiadczenieWeight =
+    sawVariables.designerVariables.doswiadczenie / weightSum;
+  let szybkoscPracyWeight =
+    sawVariables.designerVariables.szybkoscPracy / weightSum;
+  let komunikacjaWeight =
+    sawVariables.designerVariables.komunikacja / weightSum;
+  let kreatywnoscWeight =
+    sawVariables.designerVariables.kreatywnosc / weightSum;
+  let resposywnoscWeight =
+    sawVariables.designerVariables.responsywnosc / weightSum;
+
+  console.log(
+    weightSum,
+    doswiadczenieWeight,
+    szybkoscPracyWeight,
+    komunikacjaWeight,
+    kreatywnoscWeight,
+    resposywnoscWeight
+  );
+  const findExperience = (list) => {
+    if (designerData) {
+      const searchedValue = Math.max(...list.map((obj) => obj.doswiadczenie));
+      return list.filter((obj) => obj.doswiadczenie === searchedValue);
+    }
+  };
+  console.log(find(designerData)[0].doswiadczenie);
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
       <div className="py-6 text-5xl">
@@ -76,19 +123,23 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                designerVariables: {
-                  ...sawVariables.designerVariables,
-                  doswiadczenie:
-                    sawVariables.designerVariables.doswiadczenie + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.designerVariables.doswiadczenie < 10)
+                setSawVariables({
+                  ...sawVariables,
+                  designerVariables: {
+                    ...sawVariables.designerVariables,
+                    doswiadczenie:
+                      sawVariables.designerVariables.doswiadczenie + 1,
+                  },
+                });
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.designerVariables.doswiadczenie}
             onChange={(e) => {
               parseString(e, "doswiadczenie");
@@ -99,7 +150,7 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.designerVariables.doswiadczenie > 0) {
+              if (sawVariables.designerVariables.doswiadczenie > 1) {
                 setSawVariables({
                   ...sawVariables,
                   designerVariables: {
@@ -120,19 +171,24 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                designerVariables: {
-                  ...sawVariables.designerVariables,
-                  szybkoscPracy:
-                    sawVariables.designerVariables.szybkoscPracy + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.designerVariables.szybkoscPracy < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  designerVariables: {
+                    ...sawVariables.designerVariables,
+                    szybkoscPracy:
+                      sawVariables.designerVariables.szybkoscPracy + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.designerVariables.szybkoscPracy}
             onChange={(e) => {
               parseString(e, "szybkoscPracy");
@@ -143,7 +199,7 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.designerVariables.szybkoscPracy > 0) {
+              if (sawVariables.designerVariables.szybkoscPracy > 1) {
                 setSawVariables({
                   ...sawVariables,
                   designerVariables: {
@@ -164,18 +220,22 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                designerVariables: {
-                  ...sawVariables.designerVariables,
-                  komunikacja: sawVariables.designerVariables.komunikacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.designerVariables.komunikacja < 10)
+                setSawVariables({
+                  ...sawVariables,
+                  designerVariables: {
+                    ...sawVariables.designerVariables,
+                    komunikacja: sawVariables.designerVariables.komunikacja + 1,
+                  },
+                });
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.designerVariables.komunikacja}
             onChange={(e) => {
               parseString(e, "komunikacja");
@@ -186,7 +246,7 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.designerVariables.komunikacja > 0) {
+              if (sawVariables.designerVariables.komunikacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   designerVariables: {
@@ -206,18 +266,22 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                designerVariables: {
-                  ...sawVariables.designerVariables,
-                  kreatywnosc: sawVariables.designerVariables.kreatywnosc + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.designerVariables.kreatywnosc < 10)
+                setSawVariables({
+                  ...sawVariables,
+                  designerVariables: {
+                    ...sawVariables.designerVariables,
+                    kreatywnosc: sawVariables.designerVariables.kreatywnosc + 1,
+                  },
+                });
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.designerVariables.kreatywnosc}
             onChange={(e) => {
               parseString(e, "kreatywnosc");
@@ -228,7 +292,7 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.designerVariables.kreatywnosc > 0) {
+              if (sawVariables.designerVariables.kreatywnosc > 1) {
                 setSawVariables({
                   ...sawVariables,
                   designerVariables: {
@@ -248,19 +312,24 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                designerVariables: {
-                  ...sawVariables.designerVariables,
-                  responsywnosc:
-                    sawVariables.designerVariables.responsywnosc + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.designerVariables.responsywnosc < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  designerVariables: {
+                    ...sawVariables.designerVariables,
+                    responsywnosc:
+                      sawVariables.designerVariables.responsywnosc + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.designerVariables.responsywnosc}
             onChange={(e) => {
               parseString(e, "responsywnosc");
@@ -271,7 +340,7 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.designerVariables.responsywnosc > 0) {
+              if (sawVariables.designerVariables.responsywnosc > 1) {
                 setSawVariables({
                   ...sawVariables,
                   designerVariables: {

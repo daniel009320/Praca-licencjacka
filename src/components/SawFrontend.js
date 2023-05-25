@@ -81,6 +81,39 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
           break;
       }
   };
+  let weightSum =
+    sawVariables.frontendVariables.frontDoswiadczenie +
+    sawVariables.frontendVariables.szybkoscPisaniaKodu +
+    sawVariables.frontendVariables.frontKomunikacja +
+    sawVariables.frontendVariables.frontPracaZespolowa +
+    sawVariables.frontendVariables.frontAdaptacja +
+    sawVariables.frontendVariables.testowanieWlasnegoKodu +
+    sawVariables.frontendVariables.stylowanie;
+
+  let doswiadczenieWeight =
+    sawVariables.frontendVariables.frontDoswiadczenie / weightSum;
+  let szybkoscPisaniaKoduWeight =
+    sawVariables.frontendVariables.szybkoscPisaniaKodu / weightSum;
+  let komunikacjaWeight =
+    sawVariables.frontendVariables.frontKomunikacja / weightSum;
+  let pracaZespolowaWeight =
+    sawVariables.frontendVariables.frontPracaZespolowa / weightSum;
+  let adaptacjaWeight =
+    sawVariables.frontendVariables.frontAdaptacja / weightSum;
+  let testowanieWlasnegoKoduWeight =
+    sawVariables.frontendVariables.testowanieWlasnegoKodu / weightSum;
+  let stylowanieWeight = sawVariables.frontendVariables.stylowanie / weightSum;
+
+  console.log(
+    weightSum,
+    doswiadczenieWeight,
+    szybkoscPisaniaKoduWeight,
+    komunikacjaWeight,
+    pracaZespolowaWeight,
+    adaptacjaWeight,
+    testowanieWlasnegoKoduWeight,
+    stylowanieWeight
+  );
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
       <div className="py-6 text-5xl">
@@ -94,19 +127,24 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                frontendVariables: {
-                  ...sawVariables.frontendVariables,
-                  frontDoswiadczenie:
-                    sawVariables.frontendVariables.frontDoswiadczenie + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.frontendVariables.frontDoswiadczenie < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  frontendVariables: {
+                    ...sawVariables.frontendVariables,
+                    frontDoswiadczenie:
+                      sawVariables.frontendVariables.frontDoswiadczenie + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.frontendVariables.frontDoswiadczenie}
             onChange={(e) => {
               parseString(e, "frontDoswiadczenie");
@@ -117,7 +155,7 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.frontendVariables.frontDoswiadczenie > 0) {
+              if (sawVariables.frontendVariables.frontDoswiadczenie > 1) {
                 setSawVariables({
                   ...sawVariables,
                   frontendVariables: {
@@ -141,19 +179,24 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                frontendVariables: {
-                  ...sawVariables.frontendVariables,
-                  szybkoscPisaniaKodu:
-                    sawVariables.frontendVariables.szybkoscPisaniaKodu + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.frontendVariables.szybkoscPisaniaKodu < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  frontendVariables: {
+                    ...sawVariables.frontendVariables,
+                    szybkoscPisaniaKodu:
+                      sawVariables.frontendVariables.szybkoscPisaniaKodu + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.frontendVariables.szybkoscPisaniaKodu}
             onChange={(e) => {
               parseString(e, "szybkoscPisaniaKodu");
@@ -164,7 +207,7 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.frontendVariables.szybkoscPisaniaKodu > 0) {
+              if (sawVariables.frontendVariables.szybkoscPisaniaKodu > 1) {
                 setSawVariables({
                   ...sawVariables,
                   frontendVariables: {
@@ -185,19 +228,24 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                frontendVariables: {
-                  ...sawVariables.frontendVariables,
-                  frontKomunikacja:
-                    sawVariables.frontendVariables.frontKomunikacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.frontendVariables.frontKomunikacja < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  frontendVariables: {
+                    ...sawVariables.frontendVariables,
+                    frontKomunikacja:
+                      sawVariables.frontendVariables.frontKomunikacja + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.frontendVariables.frontKomunikacja}
             onChange={(e) => {
               parseString(e, "frontKomunikacja");
@@ -208,7 +256,7 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.frontendVariables.frontKomunikacja > 0) {
+              if (sawVariables.frontendVariables.frontKomunikacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   frontendVariables: {
@@ -229,19 +277,24 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                frontendVariables: {
-                  ...sawVariables.frontendVariables,
-                  frontPracaZespolowa:
-                    sawVariables.frontendVariables.frontPracaZespolowa + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.frontendVariables.frontPracaZespolowa < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  frontendVariables: {
+                    ...sawVariables.frontendVariables,
+                    frontPracaZespolowa:
+                      sawVariables.frontendVariables.frontPracaZespolowa + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.frontendVariables.frontPracaZespolowa}
             onChange={(e) => {
               parseString(e, "frontPracaZespolowa");
@@ -252,7 +305,7 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.frontendVariables.frontPracaZespolowa > 0) {
+              if (sawVariables.frontendVariables.frontPracaZespolowa > 1) {
                 setSawVariables({
                   ...sawVariables,
                   frontendVariables: {
@@ -273,19 +326,24 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                frontendVariables: {
-                  ...sawVariables.frontendVariables,
-                  frontAdaptacja:
-                    sawVariables.frontendVariables.frontAdaptacja + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.frontendVariables.frontAdaptacja < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  frontendVariables: {
+                    ...sawVariables.frontendVariables,
+                    frontAdaptacja:
+                      sawVariables.frontendVariables.frontAdaptacja + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.frontendVariables.frontAdaptacja}
             onChange={(e) => {
               parseString(e, "frontAdaptacja");
@@ -296,7 +354,7 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.frontendVariables.frontAdaptacja > 0) {
+              if (sawVariables.frontendVariables.frontAdaptacja > 1) {
                 setSawVariables({
                   ...sawVariables,
                   frontendVariables: {
@@ -318,19 +376,24 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                frontendVariables: {
-                  ...sawVariables.frontendVariables,
-                  testowanieWlasnegoKodu:
-                    sawVariables.frontendVariables.testowanieWlasnegoKodu + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.frontendVariables.testowanieWlasnegoKodu < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  frontendVariables: {
+                    ...sawVariables.frontendVariables,
+                    testowanieWlasnegoKodu:
+                      sawVariables.frontendVariables.testowanieWlasnegoKodu + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.frontendVariables.testowanieWlasnegoKodu}
             onChange={(e) => {
               parseString(e, "testowanieWlasnegoKodu");
@@ -361,18 +424,23 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             src={arrowUp}
             alt="arrow up"
             className="cursor-pointer"
-            onClick={() =>
-              setSawVariables({
-                ...sawVariables,
-                frontendVariables: {
-                  ...sawVariables.frontendVariables,
-                  stylowanie: sawVariables.frontendVariables.stylowanie + 1,
-                },
-              })
-            }
+            onClick={() => {
+              if (sawVariables.frontendVariables.stylowanie < 10) {
+                setSawVariables({
+                  ...sawVariables,
+                  frontendVariables: {
+                    ...sawVariables.frontendVariables,
+                    stylowanie: sawVariables.frontendVariables.stylowanie + 1,
+                  },
+                });
+              }
+            }}
           />
           <input
             className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+            type="number"
+            max={10}
+            disabled={true}
             value={sawVariables.frontendVariables.stylowanie}
             onChange={(e) => {
               parseString(e, "stylowanie");
@@ -383,7 +451,7 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
             alt="arrow down"
             className="cursor-pointer"
             onClick={() => {
-              if (sawVariables.frontendVariables.stylowanie > 0) {
+              if (sawVariables.frontendVariables.stylowanie > 1) {
                 setSawVariables({
                   ...sawVariables,
                   frontendVariables: {

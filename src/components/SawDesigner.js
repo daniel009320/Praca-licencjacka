@@ -15,7 +15,7 @@ import { List } from "@mui/material";
 
 export const SawDesigner = ({ sawVariables, setSawVariables }) => {
   const [designerData, setDesignerData] = useState("");
-  const [changedDesignerData, setChangedData] = useState("");
+  const [changedDesignerData, setChangedDesignerData] = useState("");
   useEffect(() => {
     async function getPageData() {
       const apiUrlEndPoint = "http://localhost:3000/api/getDataDesigner";
@@ -25,7 +25,7 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
     }
     getPageData();
   }, []);
-  console.log(designerData);
+
   const parseString = (e, updatedVariables) => {
     const numberRegex = /^\d+$/;
     if (numberRegex.test(e.target.value))
@@ -95,21 +95,82 @@ export const SawDesigner = ({ sawVariables, setSawVariables }) => {
   let resposywnoscWeight =
     sawVariables.designerVariables.responsywnosc / weightSum;
 
-  console.log(
-    weightSum,
-    doswiadczenieWeight,
-    szybkoscPracyWeight,
-    komunikacjaWeight,
-    kreatywnoscWeight,
-    resposywnoscWeight
-  );
-  const findExperience = (list) => {
-    if (designerData) {
-      const searchedValue = Math.max(...list.map((obj) => obj.doswiadczenie));
-      return list.filter((obj) => obj.doswiadczenie === searchedValue);
-    }
-  };
-  console.log(find(designerData)[0].doswiadczenie);
+  useEffect(() => {
+    const findBestEmployee = (list) => {
+      if (designerData !== "") {
+        const searchedExp = Math.max(...list.map((obj) => obj.doswiadczenie));
+        let hExp = list.filter((obj) => obj.doswiadczenie === searchedExp);
+        let currentExp = designerData.map((element) => ({
+          value: element.doswiadczenie / hExp[0].doswiadczenie,
+          id: element.id,
+        }));
+        const searchedCreativity = Math.max(
+          ...list.map((obj) => obj.kreatywnosc)
+        );
+        let hCreativity = list.filter(
+          (obj) => obj.kreatywnosc === searchedCreativity
+        );
+        let currentCre = designerData.map((element) => ({
+          value: element.kreatywnosc / hCreativity[0].kreatywnosc,
+          id: element.id,
+        }));
+        const searchedWorkPerf = Math.max(
+          ...list.map((obj) => obj.szybkosc_pracy)
+        );
+        let hWorkPerf = list.filter(
+          (obj) => obj.szybkosc_pracy === searchedWorkPerf
+        );
+        let currentWorkPerf = designerData.map((element) => ({
+          value: element.szybkosc_pracy / hWorkPerf[0].szybkosc_pracy,
+          id: element.id,
+        }));
+        const searchedKom = Math.max(...list.map((obj) => obj.komunikacja));
+        let hKom = list.filter((obj) => obj.komunikacja === searchedKom);
+        let currentKom = designerData.map((element) => ({
+          value: element.komunikacja / hKom[0].komunikacja,
+          id: element.id,
+        }));
+        const searchedRes = Math.max(...list.map((obj) => obj.responsywnosc));
+        let hRes = list.filter((obj) => obj.responsywnosc === searchedRes);
+        let currentRes = designerData.map((element) => ({
+          value: element.responsywnosc / hRes[0].responsywnosc,
+          id: element.id,
+        }));
+
+        let employesChangedValues = [];
+        for (let i = 0; i < designerData.length; i++) {
+          employesChangedValues.push({
+            id: currentRes[i].id,
+            valueKom: currentKom[i].value,
+            valueRes: currentRes[i].value,
+            valueWorkPerf: currentWorkPerf[i].value,
+            valueCre: currentCre[i].value,
+            valueExp: currentExp[i].value,
+          });
+        }
+
+        let finalEmployessWeightSum = [];
+
+        for (let i = 0; i < designerData.length; i++) {
+          finalEmployessWeightSum.push({
+            id: employesChangedValues[i].id,
+            weight:
+              employesChangedValues[i].valueCre * kreatywnoscWeight +
+              employesChangedValues[i].valueExp * doswiadczenieWeight +
+              employesChangedValues[i].valueKom * komunikacjaWeight +
+              employesChangedValues[i].valueRes * resposywnoscWeight +
+              employesChangedValues[i].valueWorkPerf * szybkoscPracyWeight,
+          });
+        }
+
+        console.log(employesChangedValues, finalEmployessWeightSum);
+
+        setChangedDesignerData(finalEmployessWeightSum);
+      }
+    };
+    findBestEmployee(designerData);
+  }, [sawVariables]);
+
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
       <div className="py-6 text-5xl">

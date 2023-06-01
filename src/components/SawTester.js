@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { object, string, number, date, InferType } from "yup";
 import Image from "next/image";
 import budget from "./../assets/images/MoneyBag.svg";
@@ -12,6 +13,18 @@ import nextPage from "./../assets/images/button-arrow.svg";
 import previousPage from "./../assets/images/button-arrow-down.svg";
 
 export const SawTester = ({ sawVariables, setSawVariables }) => {
+  const [testerData, setTesterData] = useState("");
+  const [changedTesterData, setChangedTesterData] = useState("");
+  useEffect(() => {
+    async function getPageData() {
+      const apiUrlEndPoint = "http://localhost:3000/api/getDataTester";
+      const response = await fetch(apiUrlEndPoint);
+      const res = await response.json();
+      setTesterData(res.results);
+    }
+    getPageData();
+  }, []);
+
   const parseString = (e, updatedVariables) => {
     const numberRegex = /^\d+$/;
     if (numberRegex.test(e.target.value))
@@ -80,14 +93,88 @@ export const SawTester = ({ sawVariables, setSawVariables }) => {
     sawVariables.testerVariables.testTestyAutomatyczne / weightSum;
   let adaptacjaWeight = sawVariables.testerVariables.testAdaptacja / weightSum;
 
-  console.log(
-    weightSum,
-    doswiadczenieWeight,
-    komunikacjaWeight,
-    testyManualneWeight,
-    testyAutomatyczneWeight,
-    adaptacjaWeight
-  );
+  useEffect(() => {
+    const findBestEmployee = (list) => {
+      if (testerData !== "") {
+        const searchedExp = Math.max(...list.map((obj) => obj.doswiadczenie));
+        let hExp = list.filter((obj) => obj.doswiadczenie === searchedExp);
+        let currentExp = testerData.map((element) => ({
+          value: element.doswiadczenie / hExp[0].doswiadczenie,
+          id: element.id,
+        }));
+
+        const searchedAutomaticTest = Math.max(
+          ...list.map((obj) => obj.testy_automatyczne)
+        );
+        let automaticTest = list.filter(
+          (obj) => obj.testy_automatyczne === searchedAutomaticTest
+        );
+        let currentAutomaticTest = testerData.map((element) => ({
+          value:
+            element.testy_automatyczne / automaticTest[0].testy_automatyczne,
+          id: element.id,
+        }));
+
+        const searchedManualTest = Math.max(
+          ...list.map((obj) => obj.testy_manualne)
+        );
+        let hManualTest = list.filter(
+          (obj) => obj.testy_manualne === searchedManualTest
+        );
+        let currentManualTest = testerData.map((element) => ({
+          value: element.testy_manualne / hManualTest[0].testy_manualne,
+          id: element.id,
+        }));
+
+        const searchedKom = Math.max(...list.map((obj) => obj.komunikacja));
+        let hKom = list.filter((obj) => obj.komunikacja === searchedKom);
+        let currentKom = testerData.map((element) => ({
+          value: element.komunikacja / hKom[0].komunikacja,
+          id: element.id,
+        }));
+
+        const searchedAdap = Math.max(...list.map((obj) => obj.adaptacja));
+        let hAdap = list.filter((obj) => obj.adaptacja === searchedAdap);
+        let currentAdap = testerData.map((element) => ({
+          value: element.adaptacja / hAdap[0].adaptacja,
+          id: element.id,
+        }));
+
+        let employesChangedValues = [];
+        for (let i = 0; i < testerData.length; i++) {
+          employesChangedValues.push({
+            id: currentAdap[i].id,
+            valueKom: currentKom[i].value,
+            valueAdap: currentAdap[i].value,
+            valueManualTest: currentManualTest[i].value,
+            valueAutomaticTest: currentAutomaticTest[i].value,
+            valueExp: currentExp[i].value,
+          });
+        }
+
+        let finalEmployessWeightSum = [];
+
+        for (let i = 0; i < testerData.length; i++) {
+          finalEmployessWeightSum.push({
+            id: employesChangedValues[i].id,
+            weight:
+              employesChangedValues[i].valueManualTest * testyManualneWeight +
+              employesChangedValues[i].valueExp * doswiadczenieWeight +
+              employesChangedValues[i].valueKom * komunikacjaWeight +
+              employesChangedValues[i].valueAdap * adaptacjaWeight +
+              employesChangedValues[i].valueAutomaticTest *
+                testyAutomatyczneWeight,
+          });
+        }
+
+        console.log(employesChangedValues, finalEmployessWeightSum);
+
+        setChangedTesterData(finalEmployessWeightSum);
+      }
+    };
+    findBestEmployee(testerData);
+  }, [sawVariables]);
+
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
       <div className="py-6 text-5xl">

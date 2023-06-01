@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { object, string, number, date, InferType } from "yup";
 import Image from "next/image";
 import budget from "./../assets/images/MoneyBag.svg";
@@ -12,6 +13,18 @@ import nextPage from "./../assets/images/button-arrow.svg";
 import previousPage from "./../assets/images/button-arrow-down.svg";
 
 export const SawFrontend = ({ sawVariables, setSawVariables }) => {
+  const [frontData, setFrontData] = useState("");
+  const [changedFrontData, setChangedFrontData] = useState("");
+  useEffect(() => {
+    async function getPageData() {
+      const apiUrlEndPoint = "http://localhost:3000/api/getDataFrontend";
+      const response = await fetch(apiUrlEndPoint);
+      const res = await response.json();
+      setFrontData(res.results);
+    }
+    getPageData();
+  }, []);
+
   const parseString = (e, updatedVariables) => {
     const numberRegex = /^\d+$/;
     if (numberRegex.test(e.target.value))
@@ -104,16 +117,113 @@ export const SawFrontend = ({ sawVariables, setSawVariables }) => {
     sawVariables.frontendVariables.testowanieWlasnegoKodu / weightSum;
   let stylowanieWeight = sawVariables.frontendVariables.stylowanie / weightSum;
 
-  console.log(
-    weightSum,
-    doswiadczenieWeight,
-    szybkoscPisaniaKoduWeight,
-    komunikacjaWeight,
-    pracaZespolowaWeight,
-    adaptacjaWeight,
-    testowanieWlasnegoKoduWeight,
-    stylowanieWeight
-  );
+  useEffect(() => {
+    const findBestEmployee = (list) => {
+      if (frontData !== "") {
+        const searchedExp = Math.max(...list.map((obj) => obj.doswiadczenie));
+        let hExp = list.filter((obj) => obj.doswiadczenie === searchedExp);
+        let currentExp = frontData.map((element) => ({
+          value: element.doswiadczenie / hExp[0].doswiadczenie,
+          id: element.id,
+        }));
+
+        const searchedCodeSpeed = Math.max(
+          ...list.map((obj) => obj.szybkosc_pisania_kodu)
+        );
+        let codeSpeed = list.filter(
+          (obj) => obj.szybkosc_pisania_kodu === searchedCodeSpeed
+        );
+        let currentCodeSpeed = frontData.map((element) => ({
+          value:
+            element.szybkosc_pisania_kodu / codeSpeed[0].szybkosc_pisania_kodu,
+          id: element.id,
+        }));
+
+        const searchedTestCode = Math.max(
+          ...list.map((obj) => obj.testowanie_wlasnego_kodu)
+        );
+        let hTestCode = list.filter(
+          (obj) => obj.testowanie_wlasnego_kodu === searchedTestCode
+        );
+        let currentTestCode = frontData.map((element) => ({
+          value:
+            element.testowanie_wlasnego_kodu /
+            hTestCode[0].testowanie_wlasnego_kodu,
+          id: element.id,
+        }));
+
+        const searchedKom = Math.max(...list.map((obj) => obj.komunikacja));
+        let hKom = list.filter((obj) => obj.komunikacja === searchedKom);
+        let currentKom = frontData.map((element) => ({
+          value: element.komunikacja / hKom[0].komunikacja,
+          id: element.id,
+        }));
+
+        const searchedAdap = Math.max(...list.map((obj) => obj.adaptacja));
+        let hAdap = list.filter((obj) => obj.adaptacja === searchedAdap);
+        let currentAdap = frontData.map((element) => ({
+          value: element.adaptacja / hAdap[0].adaptacja,
+          id: element.id,
+        }));
+
+        const searchedTeamWork = Math.max(
+          ...list.map((obj) => obj.praca_zespolowa)
+        );
+        let hTeamWork = list.filter(
+          (obj) => obj.praca_zespolowa === searchedTeamWork
+        );
+        let currentTeamWork = frontData.map((element) => ({
+          value: element.praca_zespolowa / hTeamWork[0].praca_zespolowa,
+          id: element.id,
+        }));
+
+        const searchedStyling = Math.max(...list.map((obj) => obj.stylowanie));
+        let hStyling = list.filter((obj) => obj.stylowanie === searchedStyling);
+        let currentStyling = frontData.map((element) => ({
+          value: element.stylowanie / hStyling[0].stylowanie,
+          id: element.id,
+        }));
+
+        let employesChangedValues = [];
+        for (let i = 0; i < frontData.length; i++) {
+          employesChangedValues.push({
+            id: currentAdap[i].id,
+            valueKom: currentKom[i].value,
+            valueAdap: currentAdap[i].value,
+            valueTestCode: currentTestCode[i].value,
+            valueCodeSpeed: currentCodeSpeed[i].value,
+            valueExp: currentExp[i].value,
+            valueTeamWork: currentTeamWork[i].value,
+            valueStyling: currentStyling[i].value,
+          });
+        }
+
+        let finalEmployessWeightSum = [];
+
+        for (let i = 0; i < frontData.length; i++) {
+          finalEmployessWeightSum.push({
+            id: employesChangedValues[i].id,
+            weight:
+              employesChangedValues[i].valueCodeSpeed *
+                szybkoscPisaniaKoduWeight +
+              employesChangedValues[i].valueExp * doswiadczenieWeight +
+              employesChangedValues[i].valueKom * komunikacjaWeight +
+              employesChangedValues[i].valueAdap * adaptacjaWeight +
+              employesChangedValues[i].valueTestCode *
+                testowanieWlasnegoKoduWeight +
+              employesChangedValues[i].valueTeamWork * pracaZespolowaWeight +
+              employesChangedValues[i].valueStyling * stylowanieWeight,
+          });
+        }
+
+        console.log(employesChangedValues, finalEmployessWeightSum);
+
+        setChangedFrontData(finalEmployessWeightSum);
+      }
+    };
+    findBestEmployee(frontData);
+  }, [sawVariables]);
+
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
       <div className="py-6 text-5xl">

@@ -7,6 +7,8 @@ import { SawProjectManager } from "@/components/SawProjectManager";
 import { SawFrontend } from "@/components/SawFrontend";
 import { SawBackend } from "@/components/SawBackend";
 import { SawTester } from "@/components/SawTester";
+import { ResultsSaw } from "@/components/ResultsSaw";
+
 const saw = () => {
   const [sawVariables, setSawVariables] = useState({
     budget: 0,
@@ -60,7 +62,7 @@ const saw = () => {
       testAdaptacja: 1,
     },
   });
-  console.log(sawVariables);
+
   const returnCorectComponent = () => {
     switch (sawVariables.currentPage) {
       case 0:
@@ -108,6 +110,13 @@ const saw = () => {
       case 6:
         return (
           <SawTester
+            sawVariables={sawVariables}
+            setSawVariables={setSawVariables}
+          />
+        );
+      case 7:
+        return (
+          <ResultsSaw
             sawVariables={sawVariables}
             setSawVariables={setSawVariables}
           />

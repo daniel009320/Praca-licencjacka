@@ -10,6 +10,10 @@ import tester from "./../assets/images/TestResults.svg";
 import grafic from "./../assets/images/Illustrator.svg";
 import nextPage from "./../assets/images/button-arrow.svg";
 import ahp from "@/pages/ahp";
+import { AiFillInfoCircle } from "react-icons/ai";
+import { modalState } from "@/atoms/modalAtom";
+import { useRecoilState } from "recoil";
+import { Modal } from "./Modal";
 
 export const Formahp = ({ ahpVariables, setAhpVariables }) => {
   let userShema = object({
@@ -19,7 +23,7 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
     backend: number().required().positive().integer(),
     tester: number().required().positive().integer(),
   });
-
+  const [showModal, setShowModal] = useRecoilState(modalState);
   const parseString = (e, updatedVariables) => {
     const numberRegex = /^\d+$/;
     if (numberRegex.test(e.target.value))
@@ -62,12 +66,27 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
           break;
       }
   };
+  const handleClick = () => {
+    setShowModal(!showModal);
+  };
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
-      <div className="py-6 text-5xl">
-        <h1>Formularz</h1>
-      </div>
+      {showModal && (
+        <Modal
+          content={
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis faucibus ante et magna auctor hendrerit. Donec eu porta ante. Integer finibus sem nec lacus volutpat, ut pellentesque ipsum euismod. Cras eu dictum erat, vitae dapibus leo. Maecenas pretium rutrum est, ut efficitur arcu laoreet eu. Suspendisse consequat sagittis felis ac tristique. Nam egestas vel augue ut maximus."
+          }
+          header={"Instrukcja"}
+        />
+      )}
       <div className="lg:w-2/3 w-full justify-center flex items-center  flex-wrap gap-4  ">
+        <div className="py-6 text-5xl flex justify-center gap-6 w-full items-center ">
+          <h1>Formularz</h1>
+          <AiFillInfoCircle
+            className="w-12 h-12 pt-2 cursor-pointer "
+            onClick={handleClick}
+          />
+        </div>
         <div className="w-[325px] border-2 border-black py-4 px-6 flex items-center flex-col gap-2">
           <Image src={budget} alt="money bag" />
           <label className="text-xl font-semibold ">Budżet na projekt</label>

@@ -25,6 +25,15 @@
   .row{
     @apply py-2 px-2 border-black border-r-2 
   }
+  .rowDatabase{
+    @apply py-4 px-16 border-b-2 border-black border-r-2 text-xl font-semibold text-center
+  }
+  .columnDatabase{
+    @apply text-center justify-center items-center border-black border-2 py-2 px-2 text-2xl 
+  }
+  .button{
+   @apply text-white bg-black font-semibold px-6 py-3 rounded-full 
+  }
 }
 .css-187mznn-MuiSlider-root{
   color: black !important;

@@ -8,6 +8,9 @@ import { AhpFrontendMatrix } from "@/components/AhpFrontednMatrix";
 import { AhpBackendMatrix } from "@/components/AhpBackendMatrix";
 import { AhpTesterMatrix } from "@/components/AhpTesterMatrix";
 import { ResultsAhp } from "@/components/ResultsAhp";
+import { Modal } from "./../components/Modal";
+import { useRecoilValue } from "recoil";
+import { modalState } from "@/atoms/modalAtom";
 
 const ahp = () => {
   const [sortedEmployeesArray, setSortedEmployeesArray] = useState({
@@ -27,6 +30,7 @@ const ahp = () => {
     }
     getPageData();
   }, []);
+  const showModal = useRecoilValue(modalState);
 
   const [ahpVariables, setAhpVariables] = useState({
     budget: 0,
@@ -259,7 +263,7 @@ const ahp = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto relative">
       <Header />
       {returnCorectComponent()}
     </div>

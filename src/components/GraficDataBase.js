@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import axios from "axios";
 import { useRouter } from "next/router";
-export const ProjectManagerDataBase = ({ employess, projectMenagers }) => {
+export const GraficDataBase = ({ employess, uiDesigners }) => {
   const [filteredTable, setFilteredTable] = useState("");
   const handleDelete = async (id, type) => {
     await axios.post("http://localhost:3000/api/deleteEmployee", {
@@ -14,18 +14,18 @@ export const ProjectManagerDataBase = ({ employess, projectMenagers }) => {
   const router = useRouter();
   useEffect(() => {
     let array = [];
-    projectMenagers.map((projectManager) => {
+    uiDesigners.map((uiDesigner) => {
       employess.map((employee) => {
-        if (employee.id === projectManager.employee_id) {
+        if (employee.id === uiDesigner.employee_id) {
           array.push({
             name: employee.imie,
             surname: employee.nazwisko,
-            experience: projectManager.doswiadczenie,
-            management: projectManager.zarzadzanie_zespolem,
-            communication: projectManager.komunikacja,
-            workPerformance: projectManager.organizacja_pracy,
-            flexAbility: projectManager.elastycznosc,
-            id: projectManager.employee_id,
+            experience: uiDesigner.doswiadczenie,
+            creativity: uiDesigner.kreatywnosc,
+            communication: uiDesigner.komunikacja,
+            workSpeed: uiDesigner.szybkosc_pracy,
+            responsivness: uiDesigner.responsywnosc,
+            id: uiDesigner.employee_id,
             zawod: employee.zawod,
           });
         }
@@ -42,10 +42,10 @@ export const ProjectManagerDataBase = ({ employess, projectMenagers }) => {
           <th className="columnDatabase">Imie</th>
           <th className="columnDatabase">Nazwisko</th>
           <th className="columnDatabase">Doswiadczenie</th>
-          <th className="columnDatabase">Adaptacja</th>
+          <th className="columnDatabase">Kreatywność</th>
           <th className="columnDatabase">Komunikacja</th>
-          <th className="columnDatabase">Zarzadzanie zespolem</th>
-          <th className="columnDatabase">Organizacja pracy</th>
+          <th className="columnDatabase">Responsywność</th>
+          <th className="columnDatabase">Szybkosc Pracy</th>
           <th className="columnDatabase">Usuń pracownika</th>
         </tr>
         {filteredTable.length > 0 &&
@@ -56,10 +56,10 @@ export const ProjectManagerDataBase = ({ employess, projectMenagers }) => {
                 <td className="rowDatabase">{element.surname}</td>
 
                 <td className="rowDatabase">{element.experience} </td>
-                <td className="rowDatabase">{element.flexAbility} </td>
+                <td className="rowDatabase">{element.creativity} </td>
                 <td className="rowDatabase">{element.communication} </td>
-                <td className="rowDatabase">{element.management} </td>
-                <td className="rowDatabase">{element.workPerformance} </td>
+                <td className="rowDatabase">{element.responsivness} </td>
+                <td className="rowDatabase">{element.workSpeed} </td>
                 <td className="rowDatabase">
                   <AiFillCloseCircle
                     className="h-8 w-8 mx-auto cursor-pointer"

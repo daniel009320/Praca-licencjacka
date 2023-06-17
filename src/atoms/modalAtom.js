@@ -9,5 +9,5 @@ export const categoryState = atom({
 });
 export const confirmationModal = atom({
   key: "confirmationModal",
-  default: "false",
+  default: false,
 });

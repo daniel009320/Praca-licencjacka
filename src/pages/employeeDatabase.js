@@ -11,23 +11,104 @@ import { useRecoilState } from "recoil";
 import { categoryState } from "@/atoms/modalAtom";
 import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { confirmationModal } from "@/atoms/modalAtom";
+import { useQuery } from "@tanstack/react-query";
 
-function employeeDatabase({
-  generalEmployess,
-  projectMenagers,
-  frontEndDevelopers,
-  uiDesigners,
-  backendDevelopers,
-  testers,
-}) {
+function EmployeeDatabase(
+  {
+    // generalEmployess,
+    // projectMenagers,
+    // frontEndDevelopers,
+    // uiDesigners,
+    // backendDevelopers,
+    // testers,
+  }
+) {
   const [category, setCategory] = useRecoilState(categoryState);
-  console.log(category);
+  const [generalEmployess,setGeneralEmployess]=useState('')
+  const [frontEndDevelopers,setFrontEndDevelopers]=useState('')
+  const [projectMenagers,setProjectMenagers]=useState('')
+  const [testers,setTesters]=useState('')
+  const [backendDevelopers,setBackendDevelopers]=useState('')
+  const [uiDesigners,setUiDesigners]=useState('')
   const handleCategoryChange = (value) => {
     if (value !== category) {
       setCategory(value);
     }
   };
   const [modal, setModal] = useRecoilState(confirmationModal);
+
+  async function fetchGeneralEmployees() {
+    const res = await fetch("http://localhost:3000/api/getData");
+    const response = await res.json();
+    return response.results;
+  }
+  async function fetchDataFrontend() {
+    const res = await fetch("http://localhost:3000/api/getDataFrontend");
+    const response = await res.json();
+    return response.results;
+  }
+  async function fetchDataMenagers() {
+    const res = await fetch("http://localhost:3000/api/getDataManager");
+    const response = await res.json();
+    return response.results;
+  }
+  async function fetchDataTester() {
+    const res = await fetch("http://localhost:3000/api/getDataTester");
+    const response = await res.json();
+    return response.results;
+  }
+  async function fetchDataBackend() {
+    const res = await fetch("http://localhost:3000/api/getDataBackend");
+    const response = await res.json();
+    return response.results;
+  }
+  async function fetchDataDesigner() {
+    const res = await fetch("http://localhost:3000/api/getDataDesigner");
+    const response = await res.json();
+    return response.results;
+  }
+
+
+    const {data:general}=useQuery(["general"], () => fetchGeneralEmployees(), {
+
+      onSuccess:(general)=>{
+        setGeneralEmployess(general)
+      }
+    });
+
+
+    useQuery(["frontend"], () => fetchDataFrontend(), {
+   
+      onSuccess:(data)=>{
+        setFrontEndDevelopers(data)
+      }
+    });
+  const {data:projectManager}=  useQuery(["managers"], () => fetchDataMenagers(), {
+      
+      onSuccess:(projectManager)=>{
+        setProjectMenagers(projectManager)
+      }
+    });
+    const {data:frontend}=useQuery(["tester"], () => fetchDataTester(), {
+    
+      onSuccess:(frontend)=>{
+        setTesters(frontend)
+      }
+    });
+    const {data:backend}=useQuery(["backend"], () => fetchDataBackend(), {
+  
+      onSuccess:(backend)=>{
+        setBackendDevelopers(backend)
+      }
+
+    });
+    const {data:designers}=useQuery(["designer"], () => fetchDataDesigner(), {
+
+      onSuccess:(designers)=>{
+        setUiDesigners(designers)
+      }
+    });
+
   const returnSelectedEmployees = () => {
     switch (category) {
       case "general":
@@ -108,42 +189,11 @@ function employeeDatabase({
           Testerzy
         </button>
       </div>
-      {hasMounted && <div>{returnSelectedEmployees()}</div>}
-      {modal && <ConfirmationModal />}
+    {hasMounted && <div>{returnSelectedEmployees()}</div>}
+     {modal&&<ConfirmationModal/>}
     </section>
   );
 }
-export default employeeDatabase;
+export default EmployeeDatabase;
 
-export async function getServerSideProps() {
-  const [
-    generalEmployess,
-    projectMenagers,
-    frontEndDevelopers,
-    uiDesigners,
-    backendDevelopers,
-    testers,
-  ] = await Promise.all([
-    fetch("http://localhost:3000/api/getData").then((res) => res.json()),
-    fetch("http://localhost:3000/api/getDataManager").then((res) => res.json()),
-    fetch("http://localhost:3000/api/getDataFrontend").then((res) =>
-      res.json()
-    ),
-    fetch("http://localhost:3000/api/getDataDesigner").then((res) =>
-      res.json()
-    ),
-    fetch("http://localhost:3000/api/getDataBackend").then((res) => res.json()),
-    fetch("http://localhost:3000/api/getDataTester").then((res) => res.json()),
-  ]);
 
-  return {
-    props: {
-      generalEmployess: generalEmployess.results,
-      projectMenagers: projectMenagers.results,
-      frontEndDevelopers: frontEndDevelopers.results,
-      uiDesigners: uiDesigners.results,
-      backendDevelopers: backendDevelopers.results,
-      testers: testers.results,
-    },
-  };
-}

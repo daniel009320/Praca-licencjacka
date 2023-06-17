@@ -12,8 +12,14 @@ import arrowDown from "./../assets/images/SortDown-1.svg";
 import { Slider } from "@mui/material";
 import { useEffect, useState } from "react";
 import ahp from "@/pages/ahp";
+import { AiFillInfoCircle } from "react-icons/ai";
+import { modalState } from "@/atoms/modalAtom";
+import { useRecoilState } from "recoil";
+import { Modal } from "./Modal";
+
 export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
   const [remnantHours, setRemnantHours] = useState(ahpVariables.hours);
+  const [showModal, setShowModal] = useRecoilState(modalState);
   const [maxHours, setMaxHours] = useState(ahpVariables.hours);
   useEffect(() => {
     if (!ahpVariables.designer) {
@@ -29,9 +35,8 @@ export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
       ahpVariables.designerHours +
       ahpVariables.pmHours +
       ahpVariables.testerHours;
-   
-     
-    setRemnantHours(ahpVariables.hours-difference);
+
+    setRemnantHours(ahpVariables.hours - difference);
   }, [
     ahpVariables.designer,
     ahpVariables.frontHours + ahpVariables.backendHours,
@@ -39,40 +44,69 @@ export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
     ahpVariables.pmHours,
     ahpVariables.testerHours,
   ]);
-  
-  console.log(remnantHours)
+
+  console.log(remnantHours);
   const updateValues = (e, updatedValue) => {
-     const numberRegex = /^\d+$/;
+    const numberRegex = /^\d+$/;
     if (numberRegex.test(e.target.value))
-    switch (updatedValue) {
-      case "frontHours":
-        setAhpVariables(state=>({ ...state, frontHours: Number(e.target.value) }));
+      switch (updatedValue) {
+        case "frontHours":
+          setAhpVariables((state) => ({
+            ...state,
+            frontHours: Number(e.target.value),
+          }));
 
-        break;
-      case "backendHours":
-        setAhpVariables(state=>({ ...state, backendHours: Number(e.target.value) }));
+          break;
+        case "backendHours":
+          setAhpVariables((state) => ({
+            ...state,
+            backendHours: Number(e.target.value),
+          }));
 
-        break;
-      case "designerHours":
-        setAhpVariables(state=>({ ...state, designerHours: Number(e.target.value) }));
+          break;
+        case "designerHours":
+          setAhpVariables((state) => ({
+            ...state,
+            designerHours: Number(e.target.value),
+          }));
 
-        break;
-      case "pmHours":
-        setAhpVariables(state=>({ ...state, pmHours: Number(e.target.value)}));
+          break;
+        case "pmHours":
+          setAhpVariables((state) => ({
+            ...state,
+            pmHours: Number(e.target.value),
+          }));
 
-        break;
-      case "testerHours":
-        setAhpVariables(state=>({ ...state, testerHours: Number(e.target.value) }));
+          break;
+        case "testerHours":
+          setAhpVariables((state) => ({
+            ...state,
+            testerHours: Number(e.target.value),
+          }));
 
-        break;
-    }
+          break;
+      }
   };
-
+  const handleClick = () => {
+    setShowModal(!showModal);
+  };
 
   return (
     <div className="flex w-full  justify-center  flex-col items-center">
-      <div className="py-6 text-5xl items-center justify-center">
+      {showModal && (
+        <Modal
+          content={
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis faucibus ante et magna auctor hendrerit. Donec eu porta ante. Integer finibus sem nec lacus volutpat, ut pellentesque ipsum euismod. Cras eu dictum erat, vitae dapibus leo. Maecenas pretium rutrum est, ut efficitur arcu laoreet eu. Suspendisse consequat sagittis felis ac tristique. Nam egestas vel augue ut maximus."
+          }
+          header={"Instrukcja"}
+        />
+      )}
+      <div className="py-6 text-5xl flex justify-center gap-6 w-full items-center ">
         <h1>Przypisanie godzin</h1>
+        <AiFillInfoCircle
+          className="w-12 h-12 pt-2 cursor-pointer "
+          onClick={handleClick}
+        />
       </div>
       {remnantHours < 1 ? (
         <div className="  text-center text-lg items-center justify-center py-2 px-2 border-2 border-red-600 text-red-600 mt-10 mb-10 ">
@@ -93,36 +127,35 @@ export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
               Ilość godzin dla grafika
             </label>
             <div className=" flex w-full  mt-7 items-center justify-center flex-col items-center">
-            <Image
-            src={arrowUp}
-            alt="arrow up"
-            className="cursor-pointer"
-            onClick={() =>
-              setAhpVariables(state=>({
-                ...state,
-                designerHours: ahpVariables.designerHours + 1,
-              }))
-            }
-          />
+              <Image
+                src={arrowUp}
+                alt="arrow up"
+                className="cursor-pointer"
+                onClick={() =>
+                  setAhpVariables((state) => ({
+                    ...state,
+                    designerHours: ahpVariables.designerHours + 1,
+                  }))
+                }
+              />
               <input
                 value={ahpVariables.designerHours}
                 className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
                 onChange={(e) => updateValues(e, "designerHours")}
-                
               />
               <Image
-            src={arrowDown}
-            alt="arrow down"
-            className="cursor-pointer"
-            onClick={() => {
-              if (ahpVariables.designerHours > 0) {
-                setAhpVariables(state=>({
-                  ...state,
-                  designerHours: ahpVariables.designerHours - 1,
-                }));
-              }
-            }}
-          />
+                src={arrowDown}
+                alt="arrow down"
+                className="cursor-pointer"
+                onClick={() => {
+                  if (ahpVariables.designerHours > 0) {
+                    setAhpVariables((state) => ({
+                      ...state,
+                      designerHours: ahpVariables.designerHours - 1,
+                    }));
+                  }
+                }}
+              />
             </div>
           </div>
         ) : (
@@ -136,37 +169,35 @@ export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
           </label>
 
           <div className="w-full  flex justify-center flex-col items-center ">
-          <Image
-            src={arrowUp}
-            alt="arrow up"
-            className="cursor-pointer"
-            onClick={() =>
-              setAhpVariables(state=>({
-                ...state,
-                pmHours: ahpVariables.pmHours + 1,
-              }))
-            }
-          />
+            <Image
+              src={arrowUp}
+              alt="arrow up"
+              className="cursor-pointer"
+              onClick={() =>
+                setAhpVariables((state) => ({
+                  ...state,
+                  pmHours: ahpVariables.pmHours + 1,
+                }))
+              }
+            />
             <input
               value={ahpVariables.pmHours}
               className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
-          
               onChange={(e) => updateValues(e, "pmHours")}
-             
             />
-             <Image
-            src={arrowDown}
-            alt="arrow down"
-            className="cursor-pointer"
-            onClick={() => {
-              if (ahpVariables.pmHours > 0) {
-                setAhpVariables(state=>({
-                  ...state,
-                  pmHours: ahpVariables.pmHours - 1,
-                }));
-              }
-            }}
-          />
+            <Image
+              src={arrowDown}
+              alt="arrow down"
+              className="cursor-pointer"
+              onClick={() => {
+                if (ahpVariables.pmHours > 0) {
+                  setAhpVariables((state) => ({
+                    ...state,
+                    pmHours: ahpVariables.pmHours - 1,
+                  }));
+                }
+              }}
+            />
           </div>
         </div>
 
@@ -177,35 +208,35 @@ export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
           </label>
 
           <div className="w-full  flex justify-center flex-col items-center ">
-          <Image
-            src={arrowUp}
-            alt="arrow up"
-            className="cursor-pointer"
-            onClick={() =>
-              setAhpVariables(state=>({
-                ...state,
-                frontHours: ahpVariables.frontHours + 1,
-              }))
-            }
-          />
+            <Image
+              src={arrowUp}
+              alt="arrow up"
+              className="cursor-pointer"
+              onClick={() =>
+                setAhpVariables((state) => ({
+                  ...state,
+                  frontHours: ahpVariables.frontHours + 1,
+                }))
+              }
+            />
             <input
               value={ahpVariables.frontHours}
               className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
               onChange={(e) => updateValues(e, "frontHours")}
             />
-              <Image
-            src={arrowDown}
-            alt="arrow down"
-            className="cursor-pointer"
-            onClick={() => {
-              if (ahpVariables.frontHours > 0) {
-                setAhpVariables(state=>({
-                  ...state,
-                  frontHours: ahpVariables.frontHours - 1,
-                }));
-              }
-            }}
-          />
+            <Image
+              src={arrowDown}
+              alt="arrow down"
+              className="cursor-pointer"
+              onClick={() => {
+                if (ahpVariables.frontHours > 0) {
+                  setAhpVariables((state) => ({
+                    ...state,
+                    frontHours: ahpVariables.frontHours - 1,
+                  }));
+                }
+              }}
+            />
           </div>
         </div>
 
@@ -214,42 +245,38 @@ export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
           <label className="text-xl text-center font-semibold ">
             Ilość godzin dla programistów backend
           </label>
-        
+
           <div className="w-full  flex justify-center flex-col items-center ">
-          <Image
-            src={arrowUp}
-            alt="arrow up"
-            className="cursor-pointer"
-            onClick={() =>
-              setAhpVariables(state=>({
-                ...state,
-                backendHours: ahpVariables.backendHours + 1,
-              }))
-            }
-          />
-            <input
-            className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
-              value={ahpVariables.backendHours}
-             
-              onChange={(e) => updateValues(e, "backendHours")}
-             
-            
-            />
-             <Image
-            src={arrowDown}
-            alt="arrow down"
-            className="cursor-pointer"
-            onClick={() => {
-              if (ahpVariables.backendHours > 0) {
-                setAhpVariables(state=>({
+            <Image
+              src={arrowUp}
+              alt="arrow up"
+              className="cursor-pointer"
+              onClick={() =>
+                setAhpVariables((state) => ({
                   ...state,
-                  backendHours: ahpVariables.backendHours - 1,
-                }));
+                  backendHours: ahpVariables.backendHours + 1,
+                }))
               }
-            }}
-          />
+            />
+            <input
+              className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+              value={ahpVariables.backendHours}
+              onChange={(e) => updateValues(e, "backendHours")}
+            />
+            <Image
+              src={arrowDown}
+              alt="arrow down"
+              className="cursor-pointer"
+              onClick={() => {
+                if (ahpVariables.backendHours > 0) {
+                  setAhpVariables((state) => ({
+                    ...state,
+                    backendHours: ahpVariables.backendHours - 1,
+                  }));
+                }
+              }}
+            />
           </div>
-         
         </div>
 
         <div className="w-[325px] h-[272px] border-2 border-black py-4 px-6 flex items-center flex-col gap-2">
@@ -259,37 +286,35 @@ export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
           </label>
 
           <div className="w-full mt-7  flex justify-center flex-col items-center ">
-          <Image
-            src={arrowUp}
-            alt="arrow up"
-            className="cursor-pointer"
-            onClick={() =>
-              setAhpVariables(state=>({
-                ...state,
-                testerHours: ahpVariables.testerHours + 1,
-              }))
-            }
-          />
-            <input
-            className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
-              value={ahpVariables.testerHours}
-              
-              onChange={(e) => updateValues(e, "testerHours")}
-             
-            />
-              <Image
-            src={arrowDown}
-            alt="arrow down"
-            className="cursor-pointer"
-            onClick={() => {
-              if (ahpVariables.testerHours > 0) {
-                setAhpVariables(state=>({
+            <Image
+              src={arrowUp}
+              alt="arrow up"
+              className="cursor-pointer"
+              onClick={() =>
+                setAhpVariables((state) => ({
                   ...state,
-                  testerHours: ahpVariables.testerHours - 1,
-                }));
+                  testerHours: ahpVariables.testerHours + 1,
+                }))
               }
-            }}
-          />
+            />
+            <input
+              className="outline-none bg-custom-yellow text-center cursor-pointer text-xl font-semibold"
+              value={ahpVariables.testerHours}
+              onChange={(e) => updateValues(e, "testerHours")}
+            />
+            <Image
+              src={arrowDown}
+              alt="arrow down"
+              className="cursor-pointer"
+              onClick={() => {
+                if (ahpVariables.testerHours > 0) {
+                  setAhpVariables((state) => ({
+                    ...state,
+                    testerHours: ahpVariables.testerHours - 1,
+                  }));
+                }
+              }}
+            />
           </div>
         </div>
       </div>
@@ -306,18 +331,22 @@ export const AhpHours = ({ ahpVariables, setAhpVariables }) => {
             }
           />
         </div>
-       {remnantHours>=0? <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
-          <Image
-            src={nextPage}
-            alt="next page"
-            onClick={() =>
-              setAhpVariables({
-                ...ahpVariables,
-                currentPage: ahpVariables.currentPage + 1,
-              })
-            }
-          />
-        </div>:""}
+        {remnantHours >= 0 ? (
+          <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
+            <Image
+              src={nextPage}
+              alt="next page"
+              onClick={() =>
+                setAhpVariables({
+                  ...ahpVariables,
+                  currentPage: ahpVariables.currentPage + 1,
+                })
+              }
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

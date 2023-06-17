@@ -2,14 +2,21 @@ import { useState, useEffect } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useQueryClient } from "@tanstack/react-query";
+import { confirmationModal } from "@/atoms/modalAtom";
+import { useRecoilState } from "recoil";
 export const FrontendDataBase = ({ employess, frontEndDevelopers }) => {
   const [filteredTable, setFilteredTable] = useState("");
+  const [modal,setModal]=useRecoilState(confirmationModal)
+  const queryClient = useQueryClient()
   const handleDelete = async (id, type) => {
     await axios.post("http://localhost:3000/api/deleteEmployee", {
       id: id,
       type: type,
     });
-    router.push("/employeeDatabase");
+    queryClient.invalidateQueries({queryKey:'general',exact:true,})
+    queryClient.invalidateQueries({queryKey:'frontend',exact:true,})
+    setModal(true)
   };
   const router = useRouter();
   useEffect(() => {

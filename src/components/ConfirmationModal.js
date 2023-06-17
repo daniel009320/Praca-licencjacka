@@ -8,6 +8,7 @@ export const ConfirmationModal = ({ header, content }) => {
   const handleClose = () => {
     setShowModal(false);
   };
+  console.log(showModal);
   return (
     <MuiModal
       open={showModal}
@@ -17,14 +18,14 @@ export const ConfirmationModal = ({ header, content }) => {
       <div className="bg-custom-yellow rounded-xl text-black border-2 border-black py-5 ">
         <div className="flex justify-between items-center w-full px-5">
           <div></div>
-          <h2 className="text-4xl ">{header}</h2>
+          <h2 className="text-4xl ">Informacja</h2>
           <AiFillCloseCircle
             className="w-10 h-10 cursor-pointer"
             onClick={handleClose}
           />
         </div>
-        <div className="border-t-2 border-black my-4"></div>
-        <p className="pt-5 px-5 font-semibold">{content}</p>
+        <div className="border-t-2 border-black m-2"></div>
+        <p className="pt-5 px-5 font-semibold">Pracownik został usuniety!</p>
       </div>
     </MuiModal>
   );

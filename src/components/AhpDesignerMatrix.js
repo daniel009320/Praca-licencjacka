@@ -4,7 +4,10 @@ import Image from "next/image";
 import nextPage from "./../assets/images/button-arrow.svg";
 import previousPage from "./../assets/images/button-arrow-down.svg";
 import ahp from "@/pages/ahp";
-
+import { AiFillInfoCircle } from "react-icons/ai";
+import { modalState } from "@/atoms/modalAtom";
+import { useRecoilState } from "recoil";
+import { Modal } from "./Modal";
 export const AhpDesignerMatrix = ({
   employees,
   ahpVariables,
@@ -15,6 +18,7 @@ export const AhpDesignerMatrix = ({
   const [consistationRatioo, setConsistationRatioo] = useState(1);
   const [designerData, setDesignerData] = useState("");
   const [weights, setWeights] = useState("");
+  const [showModal, setShowModal] = useRecoilState(modalState);
   useEffect(() => {
     async function getPageData() {
       const apiUrlEndPoint = "http://localhost:3000/api/getDataDesigner";
@@ -271,11 +275,27 @@ export const AhpDesignerMatrix = ({
       },
     });
   }, [ahpVariables]);
-
+  const handleClick = () => {
+    setShowModal(!showModal);
+  };
   return (
     <div>
       <div className="flex justify-center py-8 px-4 text-4xl font-semibold">
-        <h2>Grafik</h2>
+        {showModal && (
+          <Modal
+            content={
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis faucibus ante et magna auctor hendrerit. Donec eu porta ante. Integer finibus sem nec lacus volutpat, ut pellentesque ipsum euismod. Cras eu dictum erat, vitae dapibus leo. Maecenas pretium rutrum est, ut efficitur arcu laoreet eu. Suspendisse consequat sagittis felis ac tristique. Nam egestas vel augue ut maximus."
+            }
+            header={"Instrukcja"}
+          />
+        )}
+        <div className="py-6 text-5xl flex justify-center gap-6 w-full items-center ">
+          <h2>Grafik</h2>
+          <AiFillInfoCircle
+            className="w-12 h-12 pt-2 cursor-pointer "
+            onClick={handleClick}
+          />
+        </div>
       </div>
       <div className="w-full justify-center items-center flex ">
         <table>

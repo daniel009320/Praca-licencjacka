@@ -28,7 +28,10 @@ export const Header = () => {
             </button>
           </div>
           <div>
-            <button className="px-6 py-3 btn-hover-menu font-semibold drop-shadow-2xl">
+            <button
+              className="px-6 py-3 btn-hover-menu font-semibold drop-shadow-2xl"
+              onClick={() => router.push("/addEmployee")}
+            >
               Dodaj pracownika
             </button>
           </div>

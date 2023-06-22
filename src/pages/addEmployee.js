@@ -6,8 +6,8 @@ function AddEmployee() {
     <div className="container mx-auto">
       <Header />
       <main>
-        <form className="grid grid-cols-2 grid-flow-row-dense content-center">
-          <div className="space-y-6 mt-10 space-x-6 w-[400px] items-end   flex flex-col">
+        <form className="flex flex-row ">
+          <div className="flex flex-col flex-wrap h-[250px] gap-4 space-x-20 ">
             {" "}
             <div className=" flex items-center gap-6 justify-end ml-6 mt-6">
               <label htmlFor="imie" className="text-xl font-semibold">
@@ -51,8 +51,6 @@ function AddEmployee() {
                 <MenuItem value={"tester"}>Tester</MenuItem>
               </Select>
             </div>
-          </div>
-          <div>
             <DesignerLabels />
           </div>
         </form>

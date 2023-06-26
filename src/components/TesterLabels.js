@@ -1,5 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
+export const TesterLabels = ({ employeeData, setEmployeeData }) => {
+  console.log(employeeData);
   return (
     <div className=" flex flex-col flex-wrap  gap-4 h-[250px] mt-6 space-x-16">
       <div className=" flex items-center gap-6 justify-end  ">
@@ -11,21 +12,21 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
           className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
           type="number"
           disabled={true}
-          value={employeeData.designerExperience}
+          value={employeeData.testerExperience}
         ></input>
         <div className="flex flex-col gap-2">
           <ChevronUpIcon
             className="w-4 h-4 cursor-pointer"
             onClick={() => {
               if (
-                employeeData.designerExperience === undefined ||
-                employeeData.designerExperience < 9
+                employeeData.testerExperience === undefined ||
+                employeeData.testerExperience < 9
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  designerExperience:
-                    employeeData.designerExperience !== undefined
-                      ? employeeData.designerExperience + 1
+                  testerExperience:
+                    employeeData.testerExperience !== undefined
+                      ? employeeData.testerExperience + 1
                       : 1,
                 });
               }
@@ -35,102 +36,12 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
             className="w-4 h-4 cursor-pointer "
             onClick={() => {
               if (
-                employeeData.designerExperience !== undefined &&
-                employeeData.designerExperience > 1
+                employeeData.testerExperience !== undefined &&
+                employeeData.testerExperience > 1
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  designerExperience: employeeData.designerExperience - 1,
-                });
-              }
-            }}
-          />
-        </div>
-      </div>
-      <div className=" flex items-center gap-6 justify-end ">
-        <label htmlFor="imie" className="text-xl font-semibold">
-          Kreatywnosc:
-        </label>
-        <input
-          id="imie"
-          className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
-          type="number"
-          disabled={true}
-          value={employeeData.creativity}
-        ></input>
-        <div className="flex flex-col gap-2">
-          <ChevronUpIcon
-            className="w-4 h-4 cursor-pointer"
-            onClick={() => {
-              if (
-                employeeData.creativity === undefined ||
-                employeeData.creativity < 9
-              ) {
-                setEmployeeData({
-                  ...employeeData,
-                  creativity:
-                    employeeData.creativity !== undefined
-                      ? employeeData.creativity + 1
-                      : 1,
-                });
-              }
-            }}
-          />
-          <ChevronDownIcon
-            className="w-4 h-4 cursor-pointer "
-            onClick={() => {
-              if (
-                employeeData.creativity !== undefined &&
-                employeeData.creativity > 1
-              ) {
-                setEmployeeData({
-                  ...employeeData,
-                  creativity: employeeData.creativity - 1,
-                });
-              }
-            }}
-          />
-        </div>
-      </div>
-      <div className=" flex items-center gap-6 justify-end ">
-        <label htmlFor="imie" className="text-xl font-semibold">
-          Szybkosc pracy:
-        </label>
-        <input
-          id="imie"
-          className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
-          type="number"
-          disabled={true}
-          value={employeeData.workSpeed}
-        ></input>
-        <div className="flex flex-col gap-2">
-          <ChevronUpIcon
-            className="w-4 h-4 cursor-pointer"
-            onClick={() => {
-              if (
-                employeeData.workSpeed === undefined ||
-                employeeData.workSpeed < 9
-              ) {
-                setEmployeeData({
-                  ...employeeData,
-                  workSpeed:
-                    employeeData.workSpeed !== undefined
-                      ? employeeData.workSpeed + 1
-                      : 1,
-                });
-              }
-            }}
-          />
-          <ChevronDownIcon
-            className="w-4 h-4 cursor-pointer "
-            onClick={() => {
-              if (
-                employeeData.workSpeed !== undefined &&
-                employeeData.workSpeed > 1
-              ) {
-                setEmployeeData({
-                  ...employeeData,
-                  workSpeed: employeeData.workSpeed - 1,
+                  testerExperience: employeeData.testerExperience - 1,
                 });
               }
             }}
@@ -146,21 +57,21 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
           className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
           type="number"
           disabled={true}
-          value={employeeData.designerComunication}
+          value={employeeData.testerComunication}
         ></input>
         <div className="flex flex-col gap-2">
           <ChevronUpIcon
             className="w-4 h-4 cursor-pointer"
             onClick={() => {
               if (
-                employeeData.designerComunication === undefined ||
-                employeeData.designerComunication < 9
+                employeeData.testerComunication === undefined ||
+                employeeData.testerComunication < 9
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  designerComunication:
-                    employeeData.designerComunication !== undefined
-                      ? employeeData.designerComunication + 1
+                  testerComunication:
+                    employeeData.testerComunication !== undefined
+                      ? employeeData.testerComunication + 1
                       : 1,
                 });
               }
@@ -170,12 +81,12 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
             className="w-4 h-4 cursor-pointer "
             onClick={() => {
               if (
-                employeeData.designerComunication !== undefined &&
-                employeeData.designerComunication > 1
+                employeeData.testerComunication !== undefined &&
+                employeeData.testerComunication > 1
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  designerComunication: employeeData.designerComunication - 1,
+                  testerComunication: employeeData.testerComunication - 1,
                 });
               }
             }}
@@ -184,28 +95,28 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
       </div>
       <div className=" flex items-center gap-6 justify-end ">
         <label htmlFor="imie" className="text-xl font-semibold">
-          Responsywnosc:
+          Testy manualne:
         </label>
         <input
           id="imie"
           className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
           type="number"
           disabled={true}
-          value={employeeData.responsiveness}
+          value={employeeData.manualTest}
         ></input>
         <div className="flex flex-col gap-2">
           <ChevronUpIcon
             className="w-4 h-4 cursor-pointer"
             onClick={() => {
               if (
-                employeeData.responsiveness === undefined ||
-                employeeData.responsiveness < 9
+                employeeData.manualTest === undefined ||
+                employeeData.manualTest < 9
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  responsiveness:
-                    employeeData.responsiveness !== undefined
-                      ? employeeData.responsiveness + 1
+                  manualTest:
+                    employeeData.manualTest !== undefined
+                      ? employeeData.manualTest + 1
                       : 1,
                 });
               }
@@ -215,12 +126,102 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
             className="w-4 h-4 cursor-pointer "
             onClick={() => {
               if (
-                employeeData.responsiveness !== undefined &&
-                employeeData.responsiveness > 1
+                employeeData.manualTest !== undefined &&
+                employeeData.manualTest > 1
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  responsiveness: employeeData.responsiveness - 1,
+                  manualTest: employeeData.manualTest - 1,
+                });
+              }
+            }}
+          />
+        </div>
+      </div>
+      <div className=" flex items-center gap-6 justify-end ">
+        <label htmlFor="imie" className="text-xl font-semibold">
+          Testy automatyczne:
+        </label>
+        <input
+          id="imie"
+          className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
+          type="number"
+          disabled={true}
+          value={employeeData.automaticTest}
+        ></input>
+        <div className="flex flex-col gap-2">
+          <ChevronUpIcon
+            className="w-4 h-4 cursor-pointer"
+            onClick={() => {
+              if (
+                employeeData.automaticTest === undefined ||
+                employeeData.automaticTest < 9
+              ) {
+                setEmployeeData({
+                  ...employeeData,
+                  automaticTest:
+                    employeeData.automaticTest !== undefined
+                      ? employeeData.automaticTest + 1
+                      : 1,
+                });
+              }
+            }}
+          />
+          <ChevronDownIcon
+            className="w-4 h-4 cursor-pointer "
+            onClick={() => {
+              if (
+                employeeData.automaticTest !== undefined &&
+                employeeData.automaticTest > 1
+              ) {
+                setEmployeeData({
+                  ...employeeData,
+                  automaticTest: employeeData.automaticTest - 1,
+                });
+              }
+            }}
+          />
+        </div>
+      </div>
+      <div className=" flex items-center gap-6 justify-end ">
+        <label htmlFor="imie" className="text-xl font-semibold">
+          Adaptacja:
+        </label>
+        <input
+          id="imie"
+          className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
+          type="number"
+          disabled={true}
+          value={employeeData.testerAdaptation}
+        ></input>
+        <div className="flex flex-col gap-2">
+          <ChevronUpIcon
+            className="w-4 h-4 cursor-pointer"
+            onClick={() => {
+              if (
+                employeeData.testerAdaptation === undefined ||
+                employeeData.testerAdaptation < 9
+              ) {
+                setEmployeeData({
+                  ...employeeData,
+                  testerAdaptation:
+                    employeeData.testerAdaptation !== undefined
+                      ? employeeData.testerAdaptation + 1
+                      : 1,
+                });
+              }
+            }}
+          />
+          <ChevronDownIcon
+            className="w-4 h-4 cursor-pointer "
+            onClick={() => {
+              if (
+                employeeData.testerAdaptation !== undefined &&
+                employeeData.testerAdaptation > 1
+              ) {
+                setEmployeeData({
+                  ...employeeData,
+                  testerAdaptation: employeeData.testerAdaptation - 1,
                 });
               }
             }}

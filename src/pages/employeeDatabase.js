@@ -24,12 +24,12 @@ function EmployeeDatabase(
   }
 ) {
   const [category, setCategory] = useRecoilState(categoryState);
-  const [generalEmployess,setGeneralEmployess]=useState('')
-  const [frontEndDevelopers,setFrontEndDevelopers]=useState('')
-  const [projectMenagers,setProjectMenagers]=useState('')
-  const [testers,setTesters]=useState('')
-  const [backendDevelopers,setBackendDevelopers]=useState('')
-  const [uiDesigners,setUiDesigners]=useState('')
+  const [generalEmployess, setGeneralEmployess] = useState("");
+  const [frontEndDevelopers, setFrontEndDevelopers] = useState("");
+  const [projectMenagers, setProjectMenagers] = useState("");
+  const [testers, setTesters] = useState("");
+  const [backendDevelopers, setBackendDevelopers] = useState("");
+  const [uiDesigners, setUiDesigners] = useState("");
   const handleCategoryChange = (value) => {
     if (value !== category) {
       setCategory(value);
@@ -68,47 +68,53 @@ function EmployeeDatabase(
     return response.results;
   }
 
+  const { data: general } = useQuery(
+    ["general"],
+    () => fetchGeneralEmployees(),
+    {
+      onSuccess: (general) => {
+        setGeneralEmployess(general);
+      },
+    }
+  );
+  // console.log();
 
-    const {data:general}=useQuery(["general"], () => fetchGeneralEmployees(), {
-
-      onSuccess:(general)=>{
-        setGeneralEmployess(general)
-      }
-    });
-
-
-    useQuery(["frontend"], () => fetchDataFrontend(), {
-   
-      onSuccess:(data)=>{
-        setFrontEndDevelopers(data)
-      }
-    });
-  const {data:projectManager}=  useQuery(["managers"], () => fetchDataMenagers(), {
-      
-      onSuccess:(projectManager)=>{
-        setProjectMenagers(projectManager)
-      }
-    });
-    const {data:frontend}=useQuery(["tester"], () => fetchDataTester(), {
-    
-      onSuccess:(frontend)=>{
-        setTesters(frontend)
-      }
-    });
-    const {data:backend}=useQuery(["backend"], () => fetchDataBackend(), {
-  
-      onSuccess:(backend)=>{
-        setBackendDevelopers(backend)
-      }
-
-    });
-    const {data:designers}=useQuery(["designer"], () => fetchDataDesigner(), {
-
-      onSuccess:(designers)=>{
-        setUiDesigners(designers)
-      }
-    });
-
+  const { data: frontend } = useQuery(["frontend"], () => fetchDataFrontend(), {
+    onSuccess: (frontend) => {
+      setFrontEndDevelopers(frontend);
+    },
+  });
+  const { data: projectManager } = useQuery(
+    ["managers"],
+    () => fetchDataMenagers(),
+    {
+      onSuccess: (projectManager) => {
+        setProjectMenagers(projectManager);
+      },
+    }
+  );
+  const { data: tester } = useQuery(["tester"], () => fetchDataTester(), {
+    onSuccess: (tester) => {
+      setTesters(tester);
+    },
+  });
+  const { data: backend } = useQuery(["backend"], () => fetchDataBackend(), {
+    onSuccess: (backend) => {
+      setBackendDevelopers(backend);
+    },
+  });
+  const { data: designers } = useQuery(
+    ["designer"],
+    () => fetchDataDesigner(),
+    {
+      onSuccess: (designers) => {
+        setUiDesigners(designers);
+      },
+    }
+  );
+  useEffect(() => {
+    setCategory("general");
+  }, []);
   const returnSelectedEmployees = () => {
     switch (category) {
       case "general":
@@ -148,6 +154,7 @@ function EmployeeDatabase(
     }
   };
   const hasMounted = useHasMounted();
+  console.log(frontEndDevelopers, backendDevelopers, uiDesigners, tester);
   return (
     <section className="container mx-auto relative">
       <Header />
@@ -189,11 +196,9 @@ function EmployeeDatabase(
           Testerzy
         </button>
       </div>
-    {hasMounted && <div>{returnSelectedEmployees()}</div>}
-     {modal&&<ConfirmationModal/>}
+      {hasMounted && <div>{returnSelectedEmployees()}</div>}
+      {modal && <ConfirmationModal />}
     </section>
   );
 }
 export default EmployeeDatabase;
-
-

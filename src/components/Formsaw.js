@@ -18,7 +18,13 @@ export const Formsaw = ({ sawVariables, setSawVariables }) => {
     backend: number().required().positive().integer(),
     tester: number().required().positive().integer(),
   });
-
+  let userShema2 = object({
+    budget: number().required().positive().integer(),
+    hours: number().required().positive().integer().moreThan(3),
+    frontend: number().required().positive().integer(),
+    backend: number().required().positive().integer(),
+    tester: number().required().positive().integer(),
+  });
   const parseString = (e, updatedVariables) => {
     const numberRegex = /^\d+$/;
     if (numberRegex.test(e.target.value))
@@ -275,7 +281,11 @@ export const Formsaw = ({ sawVariables, setSawVariables }) => {
           />
         </div>
       </div>
-      {userShema.isValidSync(sawVariables) ? (
+      {(
+        sawVariables.designer
+          ? userShema.isValidSync(sawVariables)
+          : userShema2.isValidSync(sawVariables)
+      ) ? (
         <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
           <Image
             src={nextPage}

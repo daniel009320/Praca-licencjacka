@@ -1,7 +1,8 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
+export const BackendLabels = ({ employeeData, setEmployeeData }) => {
+  console.log(employeeData);
   return (
-    <div className=" flex flex-col flex-wrap  gap-4 h-[250px] mt-6 space-x-16">
+    <div className=" flex flex-col flex-wrap  gap-4 h-[250px] mt-6 space-x-8">
       <div className=" flex items-center gap-6 justify-end  ">
         <label htmlFor="imie" className="text-xl font-semibold">
           Doswiadczenie:
@@ -11,21 +12,21 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
           className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
           type="number"
           disabled={true}
-          value={employeeData.designerExperience}
+          value={employeeData.BackendExperience}
         ></input>
         <div className="flex flex-col gap-2">
           <ChevronUpIcon
             className="w-4 h-4 cursor-pointer"
             onClick={() => {
               if (
-                employeeData.designerExperience === undefined ||
-                employeeData.designerExperience < 9
+                employeeData.BackendExperience === undefined ||
+                employeeData.BackendExperience < 9
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  designerExperience:
-                    employeeData.designerExperience !== undefined
-                      ? employeeData.designerExperience + 1
+                  BackendExperience:
+                    employeeData.BackendExperience !== undefined
+                      ? employeeData.BackendExperience + 1
                       : 1,
                 });
               }
@@ -35,12 +36,12 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
             className="w-4 h-4 cursor-pointer "
             onClick={() => {
               if (
-                employeeData.designerExperience !== undefined &&
-                employeeData.designerExperience > 1
+                employeeData.BackendExperience !== undefined &&
+                employeeData.BackendExperience > 1
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  designerExperience: employeeData.designerExperience - 1,
+                  BackendExperience: employeeData.BackendExperience - 1,
                 });
               }
             }}
@@ -49,28 +50,28 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
       </div>
       <div className=" flex items-center gap-6 justify-end ">
         <label htmlFor="imie" className="text-xl font-semibold">
-          Kreatywnosc:
+          Szybkość pisania kodu:
         </label>
         <input
           id="imie"
           className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
           type="number"
           disabled={true}
-          value={employeeData.creativity}
+          value={employeeData.backeneCodeWritingSpeed}
         ></input>
         <div className="flex flex-col gap-2">
           <ChevronUpIcon
             className="w-4 h-4 cursor-pointer"
             onClick={() => {
               if (
-                employeeData.creativity === undefined ||
-                employeeData.creativity < 9
+                employeeData.backeneCodeWritingSpeed === undefined ||
+                employeeData.backeneCodeWritingSpeed < 9
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  creativity:
-                    employeeData.creativity !== undefined
-                      ? employeeData.creativity + 1
+                  backeneCodeWritingSpeed:
+                    employeeData.backeneCodeWritingSpeed !== undefined
+                      ? employeeData.backeneCodeWritingSpeed + 1
                       : 1,
                 });
               }
@@ -80,12 +81,13 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
             className="w-4 h-4 cursor-pointer "
             onClick={() => {
               if (
-                employeeData.creativity !== undefined &&
-                employeeData.creativity > 1
+                employeeData.backeneCodeWritingSpeed !== undefined &&
+                employeeData.backeneCodeWritingSpeed > 1
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  creativity: employeeData.creativity - 1,
+                  backeneCodeWritingSpeed:
+                    employeeData.backeneCodeWritingSpeed - 1,
                 });
               }
             }}
@@ -94,28 +96,28 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
       </div>
       <div className=" flex items-center gap-6 justify-end ">
         <label htmlFor="imie" className="text-xl font-semibold">
-          Szybkosc pracy:
+          Testowanie własnego kodu:
         </label>
         <input
           id="imie"
           className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
           type="number"
           disabled={true}
-          value={employeeData.workSpeed}
+          value={employeeData.backendCodeTesting}
         ></input>
         <div className="flex flex-col gap-2">
           <ChevronUpIcon
             className="w-4 h-4 cursor-pointer"
             onClick={() => {
               if (
-                employeeData.workSpeed === undefined ||
-                employeeData.workSpeed < 9
+                employeeData.backendCodeTesting === undefined ||
+                employeeData.backendCodeTesting < 9
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  workSpeed:
-                    employeeData.workSpeed !== undefined
-                      ? employeeData.workSpeed + 1
+                  backendCodeTesting:
+                    employeeData.backendCodeTesting !== undefined
+                      ? employeeData.backendCodeTesting + 1
                       : 1,
                 });
               }
@@ -125,12 +127,57 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
             className="w-4 h-4 cursor-pointer "
             onClick={() => {
               if (
-                employeeData.workSpeed !== undefined &&
-                employeeData.workSpeed > 1
+                employeeData.backendCodeTesting !== undefined &&
+                employeeData.backendCodeTesting > 1
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  workSpeed: employeeData.workSpeed - 1,
+                  backendCodeTesting: employeeData.backendCodeTesting - 1,
+                });
+              }
+            }}
+          />
+        </div>
+      </div>
+      <div className=" flex items-center gap-6 justify-end ">
+        <label htmlFor="imie" className="text-xl font-semibold">
+          Praca zespołowa:
+        </label>
+        <input
+          id="imie"
+          className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
+          type="number"
+          disabled={true}
+          value={employeeData.backendTeamwork}
+        ></input>
+        <div className="flex flex-col gap-2">
+          <ChevronUpIcon
+            className="w-4 h-4 cursor-pointer"
+            onClick={() => {
+              if (
+                employeeData.backendTeamwork === undefined ||
+                employeeData.backendTeamwork < 9
+              ) {
+                setEmployeeData({
+                  ...employeeData,
+                  backendTeamwork:
+                    employeeData.backendTeamwork !== undefined
+                      ? employeeData.backendTeamwork + 1
+                      : 1,
+                });
+              }
+            }}
+          />
+          <ChevronDownIcon
+            className="w-4 h-4 cursor-pointer "
+            onClick={() => {
+              if (
+                employeeData.backendTeamwork !== undefined &&
+                employeeData.backendTeamwork > 1
+              ) {
+                setEmployeeData({
+                  ...employeeData,
+                  backendTeamwork: employeeData.backendTeamwork - 1,
                 });
               }
             }}
@@ -146,21 +193,21 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
           className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
           type="number"
           disabled={true}
-          value={employeeData.designerComunication}
+          value={employeeData.backendComunication}
         ></input>
         <div className="flex flex-col gap-2">
           <ChevronUpIcon
             className="w-4 h-4 cursor-pointer"
             onClick={() => {
               if (
-                employeeData.designerComunication === undefined ||
-                employeeData.designerComunication < 9
+                employeeData.backendComunication === undefined ||
+                employeeData.backendComunication < 9
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  designerComunication:
-                    employeeData.designerComunication !== undefined
-                      ? employeeData.designerComunication + 1
+                  backendComunication:
+                    employeeData.backendComunication !== undefined
+                      ? employeeData.backendComunication + 1
                       : 1,
                 });
               }
@@ -170,12 +217,12 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
             className="w-4 h-4 cursor-pointer "
             onClick={() => {
               if (
-                employeeData.designerComunication !== undefined &&
-                employeeData.designerComunication > 1
+                employeeData.backendComunication !== undefined &&
+                employeeData.backendComunication > 1
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  designerComunication: employeeData.designerComunication - 1,
+                  backendComunication: employeeData.backendComunication - 1,
                 });
               }
             }}
@@ -184,28 +231,28 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
       </div>
       <div className=" flex items-center gap-6 justify-end ">
         <label htmlFor="imie" className="text-xl font-semibold">
-          Responsywnosc:
+          Adaptacja:
         </label>
         <input
           id="imie"
           className="bg-black text-white p-2 rounded-xl font-semibold outline-none "
           type="number"
           disabled={true}
-          value={employeeData.responsiveness}
+          value={employeeData.backendAdaptation}
         ></input>
         <div className="flex flex-col gap-2">
           <ChevronUpIcon
             className="w-4 h-4 cursor-pointer"
             onClick={() => {
               if (
-                employeeData.responsiveness === undefined ||
-                employeeData.responsiveness < 9
+                employeeData.backendAdaptation === undefined ||
+                employeeData.backendAdaptation < 9
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  responsiveness:
-                    employeeData.responsiveness !== undefined
-                      ? employeeData.responsiveness + 1
+                  backendAdaptation:
+                    employeeData.backendAdaptation !== undefined
+                      ? employeeData.backendAdaptation + 1
                       : 1,
                 });
               }
@@ -215,12 +262,12 @@ export const DesignerLabels = ({ employeeData, setEmployeeData }) => {
             className="w-4 h-4 cursor-pointer "
             onClick={() => {
               if (
-                employeeData.responsiveness !== undefined &&
-                employeeData.responsiveness > 1
+                employeeData.backendAdaptation !== undefined &&
+                employeeData.backendAdaptation > 1
               ) {
                 setEmployeeData({
                   ...employeeData,
-                  responsiveness: employeeData.responsiveness - 1,
+                  backendAdaptation: employeeData.backendAdaptation - 1,
                 });
               }
             }}

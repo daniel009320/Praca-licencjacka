@@ -21,8 +21,8 @@ export const TesterDataBase = ({ employess, testers }) => {
   const router = useRouter();
   useEffect(() => {
     let array = [];
-    testers.map((tester) => {
-      employess.map((employee) => {
+    testers?.map((tester) => {
+      employess?.map((employee) => {
         if (employee.id === tester.employee_id) {
           array.push({
             name: employee.imie,

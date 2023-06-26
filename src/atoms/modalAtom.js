@@ -11,3 +11,7 @@ export const confirmationModal = atom({
   key: "confirmationModal",
   default: false,
 });
+export const modalAddEmployee = atom({
+  key: "modalAddEmployee",
+  default: false,
+});

@@ -495,6 +495,9 @@ export const AhpDesignerMatrix = ({
           </tr>
         </table>
       </div>
+      <div className="flex justify-center items-center space-y-6 font-bold text-xl py-6 ">
+        <p>CR: {consistationRatioo.toFixed(2)}</p>
+      </div>
       <div className="flex gap-6 justify-center">
         <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
           <Image
@@ -508,22 +511,19 @@ export const AhpDesignerMatrix = ({
             }
           />
         </div>
-        {consistationRatioo < 0.1 ? (
-          <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
-            <Image
-              src={nextPage}
-              alt="next page"
-              onClick={() =>
-                setAhpVariables({
-                  ...ahpVariables,
-                  currentPage: ahpVariables.currentPage + 1,
-                })
-              }
-            />
-          </div>
-        ) : (
-          ""
-        )}
+
+        <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
+          <Image
+            src={nextPage}
+            alt="next page"
+            onClick={() =>
+              setAhpVariables({
+                ...ahpVariables,
+                currentPage: ahpVariables.currentPage + 1,
+              })
+            }
+          />
+        </div>
       </div>
     </div>
   );

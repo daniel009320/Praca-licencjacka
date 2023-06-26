@@ -6,23 +6,23 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import { confirmationModal } from "@/atoms/modalAtom";
 export const GraficDataBase = ({ employess, uiDesigners }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [filteredTable, setFilteredTable] = useState("");
-  const [modal,setModal]=useRecoilState(confirmationModal)
+  const [modal, setModal] = useRecoilState(confirmationModal);
   const handleDelete = async (id, type) => {
     await axios.post("http://localhost:3000/api/deleteEmployee", {
       id: id,
       type: type,
     });
-    queryClient.invalidateQueries({queryKey:'general',exact:true,})
-    queryClient.invalidateQueries({queryKey:'designer',exact:true,})
-    setModal(true)
+    queryClient.invalidateQueries({ queryKey: "general", exact: true });
+    queryClient.invalidateQueries({ queryKey: "designer", exact: true });
+    setModal(true);
   };
   const router = useRouter();
   useEffect(() => {
     let array = [];
-    uiDesigners.map((uiDesigner) => {
-      employess.map((employee) => {
+    uiDesigners?.map((uiDesigner) => {
+      employess?.map((employee) => {
         if (employee.id === uiDesigner.employee_id) {
           array.push({
             name: employee.imie,

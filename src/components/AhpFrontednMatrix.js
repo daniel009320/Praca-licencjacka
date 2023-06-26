@@ -45,6 +45,7 @@ export const AhpFrontendMatrix = ({
       });
     }
   };
+  console.log(returnBestFrontend());
   const sortBestFrontend = () => {
     if (frontendData) {
       return returnBestFrontend().sort((a, b) => {
@@ -429,11 +430,36 @@ export const AhpFrontendMatrix = ({
         fifthRowWeightSum +
         sixRowWeightSum +
         sevenRowWeightSum) /
-      7;
+        7 +
+      0.000000000000001;
 
     let consistencyIndex = (lambdaMax - 7) / (7 - 1);
     let consistencyRatio = consistencyIndex / 1.35;
+    console.log(
+      "Ci:",
+      consistencyIndex,
+      "lambda",
+      lambdaMax,
+      "CR:",
+      consistencyRatio
+    );
 
+    console.log(
+      ((1 / ahpVariables.frontendVariables.doswiadczenieStylowanie) *
+        firstRowWeight +
+        (1 / ahpVariables.frontendVariables.szybkoscPisaniaKoduStylowanie) *
+          secondRowWeight +
+        (1 / ahpVariables.frontendVariables.komunikacjaStylowanie) *
+          thirdRowWeight +
+        (1 / ahpVariables.frontendVariables.pracaZespolowaStylowanie) *
+          fourthRowWeight +
+        (1 / ahpVariables.frontendVariables.adaptacjaStylowanie) *
+          fifthRowWeight +
+        ahpVariables.frontendVariables.testowanieStylowanie * sixRowWeight +
+        1 * sevenRowWeight) /
+        sevenRowWeight
+    );
+    console.log(sevenRowWeight);
     setConsistationRatioo(consistencyRatio);
     setWeights({
       firstRowWeight: fifthRowWeight,
@@ -455,6 +481,7 @@ export const AhpFrontendMatrix = ({
   const handleClick = () => {
     setShowModal(!showModal);
   };
+
   return (
     <div>
       <div className="flex justify-center py-8 px-4 text-4xl font-semibold">
@@ -896,6 +923,9 @@ export const AhpFrontendMatrix = ({
           </tr>
         </table>
       </div>
+      <div className="flex justify-center items-center space-y-6 font-bold text-xl py-6 ">
+        <p>CR: {consistationRatioo.toFixed(2)}</p>
+      </div>
       <div className="flex gap-6 justify-center">
         <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
           <Image
@@ -909,22 +939,19 @@ export const AhpFrontendMatrix = ({
             }
           />
         </div>
-        {consistationRatioo < 0.1 ? (
-          <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
-            <Image
-              src={nextPage}
-              alt="next page"
-              onClick={() =>
-                setAhpVariables({
-                  ...ahpVariables,
-                  currentPage: ahpVariables.currentPage + 1,
-                })
-              }
-            />
-          </div>
-        ) : (
-          ""
-        )}
+
+        <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
+          <Image
+            src={nextPage}
+            alt="next page"
+            onClick={() =>
+              setAhpVariables({
+                ...ahpVariables,
+                currentPage: ahpVariables.currentPage + 1,
+              })
+            }
+          />
+        </div>
       </div>
     </div>
   );

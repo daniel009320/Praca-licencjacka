@@ -6,23 +6,23 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import { confirmationModal } from "@/atoms/modalAtom";
 export const ProjectManagerDataBase = ({ employess, projectMenagers }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [filteredTable, setFilteredTable] = useState("");
-  const [modal,setModal]=useRecoilState(confirmationModal)
+  const [modal, setModal] = useRecoilState(confirmationModal);
   const handleDelete = async (id, type) => {
     await axios.post("http://localhost:3000/api/deleteEmployee", {
       id: id,
       type: type,
     });
-    queryClient.invalidateQueries({queryKey:'general',exact:true,})
-    queryClient.invalidateQueries({queryKey:'menagers',exact:true,})
-    setModal(true)
+    queryClient.invalidateQueries({ queryKey: "general", exact: true });
+    queryClient.invalidateQueries({ queryKey: "menagers", exact: true });
+    setModal(true);
   };
 
   useEffect(() => {
     let array = [];
-    projectMenagers.map((projectManager) => {
-      employess.map((employee) => {
+    projectMenagers?.map((projectManager) => {
+      employess?.map((employee) => {
         if (employee.id === projectManager.employee_id) {
           array.push({
             name: employee.imie,
@@ -31,7 +31,7 @@ export const ProjectManagerDataBase = ({ employess, projectMenagers }) => {
             management: projectManager.zarzadzanie_zespolem,
             communication: projectManager.komunikacja,
             workPerformance: projectManager.organizacja_pracy,
-            flexAbility: projectManager.elastycznosc,
+            flexAbility: projectManager.adaptacja,
             id: projectManager.employee_id,
             zawod: employee.zawod,
           });

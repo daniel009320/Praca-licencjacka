@@ -7,22 +7,22 @@ import { confirmationModal } from "@/atoms/modalAtom";
 import { useRecoilState } from "recoil";
 export const FrontendDataBase = ({ employess, frontEndDevelopers }) => {
   const [filteredTable, setFilteredTable] = useState("");
-  const [modal,setModal]=useRecoilState(confirmationModal)
-  const queryClient = useQueryClient()
+  const [modal, setModal] = useRecoilState(confirmationModal);
+  const queryClient = useQueryClient();
   const handleDelete = async (id, type) => {
     await axios.post("http://localhost:3000/api/deleteEmployee", {
       id: id,
       type: type,
     });
-    queryClient.invalidateQueries({queryKey:'general',exact:true,})
-    queryClient.invalidateQueries({queryKey:'frontend',exact:true,})
-    setModal(true)
+    queryClient.invalidateQueries({ queryKey: "general", exact: true });
+    queryClient.invalidateQueries({ queryKey: "frontend", exact: true });
+    setModal(true);
   };
   const router = useRouter();
   useEffect(() => {
     let array = [];
-    frontEndDevelopers.map((frontEndDeveloper) => {
-      employess.map((employee) => {
+    frontEndDevelopers?.map((frontEndDeveloper) => {
+      employess?.map((employee) => {
         if (employee.id === frontEndDeveloper.employee_id) {
           array.push({
             name: employee.imie,

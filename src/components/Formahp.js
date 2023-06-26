@@ -23,6 +23,13 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
     backend: number().required().positive().integer(),
     tester: number().required().positive().integer(),
   });
+  let userShema2 = object({
+    budget: number().required().positive().integer(),
+    hours: number().required().positive().integer().moreThan(3),
+    frontend: number().required().positive().integer(),
+    backend: number().required().positive().integer(),
+    tester: number().required().positive().integer(),
+  });
   const [showModal, setShowModal] = useRecoilState(modalState);
   const parseString = (e, updatedVariables) => {
     const numberRegex = /^\d+$/;
@@ -295,7 +302,11 @@ export const Formahp = ({ ahpVariables, setAhpVariables }) => {
           />
         </div>
       </div>
-      {userShema.isValidSync(ahpVariables) ? (
+      {(
+        ahpVariables.designer
+          ? userShema.isValidSync(ahpVariables)
+          : userShema2.isValidSync(ahpVariables)
+      ) ? (
         <div className="border-2 border-black rounded-full py-2 px-2 cursor-pointer my-6">
           <Image
             src={nextPage}
